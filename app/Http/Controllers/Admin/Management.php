@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class Management extends Controller
 {
@@ -27,9 +28,9 @@ class Management extends Controller
 
     return view('admin.admin_management.index',['users'=> 
       User::whereHas('roles', function($query) {
-      $query->where('name', 'Admin');
+      $query->where('name', 'Admin')->where('user_id', '!=' , Auth::id());
 
-      })->orderBy('id')->paginate(10)]);
+      })->orderBy('id')->paginate(10),'current_user' => DB::table('users')->where('id', Auth::id())->first() ]);
 
           }
 
@@ -125,7 +126,7 @@ class Management extends Controller
      */
     public function update(Request $request, $id)
     {
-     //  dd($request->all());
+       //dd($request->all());
            $user= User::find($id);
            $user->name = $request['name'];
             $user->middlename = $request['middlename'];
@@ -135,7 +136,7 @@ class Management extends Controller
            $user->save();
 
         $request->session()->flash('success',"Admin account has been updated");
-        return redirect(route('admin.admin_management.index'));
+        return redirect(route('admin.management.index'));
     }
 
     /**

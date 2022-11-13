@@ -48,6 +48,120 @@
       </div>
    
     </div>
+     <div class="form-field" id="semester" >
+      <div class="form-info-header">
+      <span>Assign Grade Level</span>
+    </div>
+
+      <div class="enrollment-form-field" style="grid-template-columns:  3fr;">
+      <div class="form-field">
+     
+        <div class="enrollment-form-field" style="grid-template-columns: 1fr 1fr 1fr 1fr; padding-left: 1.4rem;" >
+          <div class="form-field" style="margin-right: 3rem;">
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" value="1" name="gradelevel[]" id="modality"
+                @foreach($grades as $grade)
+
+              @if($grade->grades_id == '1')
+
+              checked 
+
+              @endif
+
+              @endforeach>
+              <label class="form-check-label" for="flexRadioDefault1">
+                Grade 7
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" value="2" name="gradelevel[]" id="modality"
+                @foreach($grades as $grade)
+
+              @if($grade->grades_id == '2')
+
+              checked 
+
+              @endif
+
+              @endforeach>
+              <label class="form-check-label" for="flexRadioDefault1">
+                Grade 8
+              </label>
+            </div>
+          </div>
+          <div class="form-field" style="margin-right: 3rem;">
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" value="3" name="gradelevel[]" id="modality"
+                @foreach($grades as $grade)
+
+              @if($grade->grades_id == '3')
+
+              checked 
+
+              @endif
+
+              @endforeach>
+              <label class="form-check-label" for="flexRadioDefault1">
+                Grade 9
+              </label>
+            </div>
+
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" value="4" name="gradelevel[]" id="modality"  @foreach($grades as $grade)
+
+              @if($grade->grades_id == '4')
+
+              checked 
+
+              @endif
+
+              @endforeach>
+              <label class="form-check-label" for="flexRadioDefault1">
+                Grade 10
+              </label>
+            </div>
+          </div>
+          <div class="form-field" style="margin-right: 3rem;">
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" value="5" name="gradelevel[]" id="grade11"
+                @foreach($grades as $grade)
+
+              @if($grade->grades_id == '5')
+
+              checked 
+
+              @endif
+
+              @endforeach>
+              <label class="form-check-label" for="flexRadioDefault1">
+                Grade 11
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" value="6" name="gradelevel[]" id="grade12"
+              onclick="Strands();"
+                @foreach($grades as $grade)
+
+              @if($grade->grades_id == '6')
+
+              checked 
+
+              @endif
+
+              @endforeach> 
+              <label class="form-check-label" for="flexRadioDefault1">
+                Grade 12 
+              </label>
+            </div>
+          </div>
+
+
+      </div>
+    </div>
+      </div>
+
+ </div>
+
         <div class="form-group">
           <label for="specification">Content:</label>
         <textarea class="form-control" id="specification" rows="20"  name="specification" style=" width:1500px;" required>{{$announcement->content}}</textarea>

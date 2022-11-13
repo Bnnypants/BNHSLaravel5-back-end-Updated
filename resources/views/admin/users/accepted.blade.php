@@ -27,28 +27,29 @@
       <table class="table table-hover" id="table">
         <thead>
           <tr>
+            <th scope="col">Enrolled at</th>
             <th scope="col">LRN</th>
 
-            <th scope="col">First Name</th>
-            <th scope="col">Middle Name</th>
-            <th scope="col">Last Name</th>
+            <th scope="col"> Name</th>
+
              <th scope="col">Grade</th>
 
             <th scope="col">PSA/Birth Certificate/NSO</th>
             <th scope="col">SF9/Report Card</th>
             <th scope="col">Grade Level</th>
             <th scope="col">Strand</th>
-                  <th scope="col">Section</th>
+            <th scope="col">Section</th>
+            <th scope="col">Last Reviewed By</th>
+             <th scope="col">Accepted as</th>
             <th scope="col">Action</th>
           </tr>
         </thead>
         <tbody>
           @foreach($users as $user)
           <tr>
+             <td scope="row">{{$user->email_verified_at}}</td>
             <td scope="row">{{$user->lrnnumber}}</td>
-            <td>{{$user ->name}}</th>
-            <td>{{$user ->middlename}}</td>
-            <td>{{$user ->lastname}}</td>
+            <td>{{$user ->name}} {{$user ->lastname}}</td>
             <td>{{$user ->generalaverage}}</td>
 
 
@@ -75,14 +76,84 @@
 @php
  $adviser =  DB::table('teachers')->where('advisory',$user->section)->first();
 
+ $reviewed_by = DB::table('users')->where('id',$user->last_reviewed_by)->first();
+
+
+if(is_null($user->section)){
+
+  $enrolled = False;
+
+}
+else{
+
+  $enrolled = True;
+
+}
 @endphp
 
+@if($enrolled == True)
 Section Number {{$user->section}}<br> @isset($adviser)Adviser :{{$adviser->firstname}} {{$adviser->middlename}} {{$adviser->lastname}} @endisset()
 
+@php
+$show = False;
+@endphp
+
+
+
+@endif
+
+
+@if($enrolled == False)
+
+@php
+
+if(($user->gradeleveltoenrolin == 'Grade 11') ||($user->gradeleveltoenrolin == 'Grade 12')){
+  $section =  DB::table('sections')->where('grade',$user->gradeleveltoenrolin)->where('strand',$user->strandtoenrolin)->where('lower_gwa','<=',$user->generalaverage)->where('upper_gwa','>=',$user->generalaverage)->where('admission_status','Yes')->first();
+}
+else{
+
+$section =  DB::table('sections')->where('grade',$user->gradeleveltoenrolin)->where('lower_gwa','<=',$user->generalaverage)->where('upper_gwa','>=',$user->generalaverage)->where('admission_status','Yes')->first();
+}
+
+if(is_null($section)){
+
+  $depracted = True;
+
+}
+else{
+
+  $depracted = False;
+
+}
+
+@endphp
+
+@if($depracted == True)
+
+Warning: Student's section has been depracted post enrolment
+
+@php
+$show = False;
+@endphp
+
+@endif
+
+@if($depracted == False)
+
+Warning: Student have to activate his/her account to be assigned into a section
+@php
+$show = True;
+@endphp
+
+@endif
+
+@endif
 
 
 
            </td>
+         <td>@isset( $reviewed_by){{$reviewed_by->name}} {{$reviewed_by->lastname}} @endisset</td>
+         <td>{{$user->accepted_as}}</td>
             <td>
 
 
@@ -94,7 +165,9 @@ Section Number {{$user->section}}<br> @isset($adviser)Adviser :{{$adviser->first
               <div class="btn-toolbar mb-3" role="toolbar" aria-label="Toolbar with button groups">
                 <div class="btn-group me-2" role="group" aria-label="First group">
                   <a class="btn btn-md btn-warning" href="{{route('admin.users.show',$user->id) }}" role="button">View</a>
+                  @if($show == True)
                   <a class="btn btn-md btn-success" href="{{route('admin.users.edit',$user->id) }}" role="button">Accept</a>
+                  @endif
                   <a class="btn btn-md btn-danger" href="{{url('admin/reason',$user->id) }}" role="button">Reject</a>
                 </div>
               </div>

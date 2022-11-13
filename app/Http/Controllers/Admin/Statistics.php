@@ -21,76 +21,11 @@ class Statistics extends Controller
     public function __invoke(Request $request)
     {
     
-   
 
-     $female = User::whereHas('roles', function($query) {
-
-      $query->where('sex','female')->where('name', 'accepted');
-
-      })->count();
-
-     $male = User::whereHas('roles', function($query) {
-
-      $query->where('sex','male')->where('name', 'accepted');
-
-      })->count();
-
-     $transferee = User::whereHas('roles', function($query) {
-
-      $query->where('studenttype','Transferee')->where('name', 'accepted');
-
-      })->count();
-
-
-     $old = User::whereHas('roles', function($query) {
-
-      $query->where('studenttype','Old Student')->where('name', 'accepted');
-
-      })->count();
-
-  
-$top_mothertounge = DB::table('users')
-    ->select('mothertongue')
-    ->groupBy('mothertongue')
-    ->orderByRaw('COUNT(*) DESC')
-    ->limit(1)
-    ->first();
-
-$top_municipality = DB::table('users')
-    ->select('permanentmunicipality')
-    ->groupBy('permanentmunicipality')
-    ->orderByRaw('COUNT(*) DESC')
-    ->limit(1)
-    ->first();
-
-$top_baranggay = DB::table('users')
-    ->select('permanentbaranggay')
-    ->groupBy('permanentbaranggay')
-    ->orderByRaw('COUNT(*) DESC')
-    ->limit(1)
-    ->first();
-
-$top_province = DB::table('users')
-    ->select('permanentprovince')
-    ->groupBy('permanentprovince')
-    ->orderByRaw('COUNT(*) DESC')
-    ->limit(1)
-    ->first();
-
-$top_modality = DB::table('modality_user')
-    ->select('modality_id')
-    ->groupBy('modality_id')
-    ->orderByRaw('COUNT(*) DESC')
-    ->limit(1)
-    ->first();
-
-     $returning = User::whereHas('roles', function($query) {
-
-      $query->where('studenttype','Balik Aral/Returning Student')->where('name', 'accepted');
-
-      })->count();
 
  $present_schoolyear = SchoolYear::where('status','active')->orWhere('status','paused')->first();
+
+
 
  $past_schoolyear = SchoolYear::where('year_start',$present_schoolyear->year_start - 1)->first();
 
@@ -98,61 +33,291 @@ $top_modality = DB::table('modality_user')
  $present = DB::table('user_schoolyear')->where('schoolyear_start', $present_schoolyear->year_start)->count();
 
 
-  $past_gas = DB::table('user_schoolyear')->where('schoolyear_start', $present_schoolyear->year_start - 1)->where('grade', 'Grade 11')->orWhere('grade', 'Grade 12')->where('strand', 'GAS')->count();
+  $past_students = DB::table('user_schoolyear')->where('schoolyear_start', $present_schoolyear->year_start - 1)->get();
 
-  $past_humms = DB::table('user_schoolyear')->where('schoolyear_start', $present_schoolyear->year_start - 1)->where('grade', 'Grade 11')->orWhere('grade', 'Grade 12')->where('strand', 'HUMMS')->count();
+          $past_g7 = 0;
+        $past_g8 = 0;
+        $past_g9 = 0;
+        $past_g10 = 0;
+        $past_g11 = 0;
+        $past_g12 = 0;
 
-  $past_tvl= DB::table('user_schoolyear')->where('schoolyear_start', $present_schoolyear->year_start - 1)->where('grade', 'Grade 11')->orWhere('grade', 'Grade 12')->where('strand', 'TVL')->count();
+        $past_gas = 0;
+        $past_humms = 0;
+        $past_tvl = 0;
+        $past_cookery = 0;
+        $past_ict = 0;
+        $past_abm = 0;
+        $past_stem = 0;
 
-  $past_cookery = DB::table('user_schoolyear')->where('schoolyear_start', $present_schoolyear->year_start - 1)->where('grade', 'Grade 11')->orWhere('grade', 'Grade 12')->where('strand', 'COOKERY')->count();
+foreach( $past_students as $past_student){
 
-  $past_ict = DB::table('user_schoolyear')->where('schoolyear_start', $present_schoolyear->year_start - 1)->where('grade', 'Grade 11')->orWhere('grade', 'Grade 12')->where('strand', 'ICT')->count();
-
-  $past_abm = DB::table('user_schoolyear')->where('schoolyear_start', $present_schoolyear->year_start - 1)->where('grade', 'Grade 11')->orWhere('grade', 'Grade 12')->where('strand', 'ABM')->count();
-
-  $past_stem = DB::table('user_schoolyear')->where('schoolyear_start', $present_schoolyear->year_start - 1)->where('grade', 'Grade 11')->orWhere('grade', 'Grade 12')->where('strand', 'STEM')->count();
-
-
-
-  $past_g7 = DB::table('user_schoolyear')->where('schoolyear_start', $present_schoolyear->year_start - 1)->where('grade', 'Grade 7')->count();
-
-    $past_g8 = DB::table('user_schoolyear')->where('schoolyear_start', $present_schoolyear->year_start - 1)->where('grade', 'Grade 8')->count();
-
-  $past_g9 = DB::table('user_schoolyear')->where('schoolyear_start', $present_schoolyear->year_start - 1)->where('grade', 'Grade 9')->count();
-
-  $past_g10 = DB::table('user_schoolyear')->where('schoolyear_start', $present_schoolyear->year_start - 1)->where('grade', 'Grade 10')->count();
-
-  $past_g11 = DB::table('user_schoolyear')->where('schoolyear_start', $present_schoolyear->year_start - 1)->where('grade', 'Grade 11')->count();
-
-  $past_g12 = DB::table('user_schoolyear')->where('schoolyear_start', $present_schoolyear->year_start - 1)->where('grade', 'Grade 12')->count();
+ 
 
 
-  $present_gas = DB::table('user_schoolyear')->where('schoolyear_start', $present_schoolyear->year_start)->where('grade', 'Grade 11')->orWhere('grade', 'Grade 12')->where('strand', 'GAS')->count();
+    if($past_student->gradeleveltoenrolin == 'Grade 7'){
 
-  $present_humms = DB::table('user_schoolyear')->where('schoolyear_start', $present_schoolyear->year_start)->where('grade', 'Grade 11')->orWhere('grade', 'Grade 12')->where('strand', 'HUMMS')->count();
+        $past_g7++;
 
-  $present_tvl= DB::table('user_schoolyear')->where('schoolyear_start', $present_schoolyear->year_start)->where('grade', 'Grade 11')->orWhere('grade', 'Grade 12')->where('strand', 'TVL')->count();
-
-  $present_cookery = DB::table('user_schoolyear')->where('schoolyear_start', $present_schoolyear->year_start)->where('grade', 'Grade 11')->orWhere('grade', 'Grade 12')->where('strand', 'COOKERY')->count();
-
-  $present_ict = DB::table('user_schoolyear')->where('schoolyear_start', $present_schoolyear->year_start)->where('grade', 'Grade 11')->orWhere('grade', 'Grade 12')->where('strand', 'ICT')->count();
-
-  $present_abm = DB::table('user_schoolyear')->where('schoolyear_start', $present_schoolyear->year_start )->where('grade', 'Grade 11')->orWhere('grade', 'Grade 12')->where('strand', 'ABM')->count();
-
-  $present_stem = DB::table('user_schoolyear')->where('schoolyear_start', $present_schoolyear->year_start)->where('grade', 'Grade 11')->orWhere('grade', 'Grade 12')->where('strand', 'STEM')->count();
+    }
 
 
- $present_g7 = DB::table('user_schoolyear')->where('schoolyear_start', $present_schoolyear->year_start )->where('grade', 'Grade 7')->count();
+    if($past_student->gradeleveltoenrolin == 'Grade 8'){
 
-$present_g8 = DB::table('user_schoolyear')->where('schoolyear_start', $present_schoolyear->year_start )->where('grade', 'Grade 8')->count();
+        $past_g8++;
 
-  $present_g9 = DB::table('user_schoolyear')->where('schoolyear_start', $present_schoolyear->year_start )->where('grade', 'Grade 9')->count();
+    }
 
-  $present_g10 = DB::table('user_schoolyear')->where('schoolyear_start', $present_schoolyear->year_start )->where('grade', 'Grade 10')->count();
+    if($past_student->gradeleveltoenrolin == 'Grade 9'){
 
-  $present_g11 = DB::table('user_schoolyear')->where('schoolyear_start', $present_schoolyear->year_start )->where('grade', 'Grade 11')->count();
+        $past_g9++;
 
-  $present_g12 = DB::table('user_schoolyear')->where('schoolyear_start', $present_schoolyear->year_start )->where('grade', 'Grade 12')->count();
+    }
+
+    if($past_student->gradeleveltoenrolin == 'Grade 10'){
+
+        $past_g10++;
+
+    }
+
+    if($past_student->gradeleveltoenrolin == 'Grade 11'){
+
+        $past_g11++;
+
+        if($past_student->strandtoenrolin == 'HUMMS'){
+
+        $past_humms++;
+
+        }
+
+
+        if($past_student->strandtoenrolin == 'GAS'){
+
+        $past_gas++;
+
+        }
+
+
+        if($past_student->strandtoenrolin == 'TVL'){
+
+        $past_tvl++;
+
+        }
+
+
+        if($past_student->strandtoenrolin == 'COOKERY'){
+
+        $past_cookery++;
+
+        }
+
+        if($past_student->strandtoenrolin == 'STEM'){
+
+        $past_stem++;
+
+        }
+
+        if($past_student->strandtoenrolin == 'ABM'){
+
+        $past_abm++;
+
+        }
+
+    }
+
+    if($past_student->gradeleveltoenrolin == 'Grade 12'){
+     
+        $past_g12++;
+
+            if($past_student->strandtoenrolin == 'HUMMS'){
+
+        $past_humms++;
+
+        }
+
+
+        if($past_student->strandtoenrolin == 'GAS'){
+
+        $past_gas++;
+
+        }
+
+
+        if($past_student->strandtoenrolin == 'TVL'){
+
+        $past_tvl++;
+
+        }
+
+
+        if($past_student->strandtoenrolin == 'COOKERY'){
+
+        $past_cookery++;
+
+        }
+
+        if($past_student->strandtoenrolin == 'STEM'){
+
+        $past_stem++;
+
+        }
+
+        if($past_student->strandtoenrolin == 'ABM'){
+
+        $past_abm++;
+
+        }
+
+    }
+
+
+}
+
+
+  $present_students = DB::table('role_user')->where('role_id', '2')->get();
+
+        $present_g7 = 0;
+        $present_g8 = 0;
+        $present_g9 = 0;
+        $present_g10 = 0;
+        $present_g11 = 0;
+        $present_g12 = 0;
+
+        $present_gas = 0;
+        $present_humms = 0;
+        $present_tvl = 0;
+        $present_cookery = 0;
+        $present_ict = 0;
+        $present_abm = 0;
+        $present_stem = 0;
+
+
+
+// /dd( $present_students);
+foreach( $present_students as $present_student){
+
+    $student = DB::table('users')->where('id' ,$present_student->user_id)->first();
+
+
+    if($student->gradeleveltoenrolin == 'Grade 7'){
+
+        $present_g7++;
+
+    }
+
+
+    if($student->gradeleveltoenrolin == 'Grade 8'){
+
+        $present_g8++;
+
+    }
+
+    if($student->gradeleveltoenrolin == 'Grade 9'){
+
+        $present_g9++;
+
+    }
+
+    if($student->gradeleveltoenrolin == 'Grade 10'){
+
+        $present_g10++;
+
+    }
+
+    if($student->gradeleveltoenrolin == 'Grade 11'){
+
+        $present_g11++;
+
+        if($student->strandtoenrolin == 'HUMMS'){
+
+        $present_humms++;
+
+        }
+
+
+        if($student->strandtoenrolin == 'GAS'){
+
+        $present_gas++;
+
+        }
+
+
+        if($student->strandtoenrolin == 'TVL'){
+
+        $present_tvl++;
+
+        }
+
+
+        if($student->strandtoenrolin == 'COOKERY'){
+
+        $present_cookery++;
+
+        }
+
+        if($student->strandtoenrolin == 'STEM'){
+
+        $present_stem++;
+
+        }
+
+        if($student->strandtoenrolin == 'ABM'){
+
+        $present_abm++;
+
+        }
+
+    }
+
+    if($student->gradeleveltoenrolin == 'Grade 12'){
+     
+        $present_g12++;
+
+            if($student->strandtoenrolin == 'HUMMS'){
+
+        $present_humms++;
+
+        }
+
+
+        if($student->strandtoenrolin == 'GAS'){
+
+        $present_gas++;
+
+        }
+
+
+        if($student->strandtoenrolin == 'TVL'){
+
+        $present_tvl++;
+
+        }
+
+
+        if($student->strandtoenrolin == 'COOKERY'){
+
+        $present_cookery++;
+
+        }
+
+        if($student->strandtoenrolin == 'STEM'){
+
+        $present_stem++;
+
+        }
+
+        if($student->strandtoenrolin == 'ABM'){
+
+        $present_abm++;
+
+        }
+
+    }
+
+
+}
+
+//dd($present_g12++);
 
         return view('admin.statistics',[
 
@@ -177,7 +342,7 @@ $present_g8 = DB::table('user_schoolyear')->where('schoolyear_start', $present_s
         'present' => $present,
         'present_schoolyear' => $past_schoolyear,
 
-         'present_gas' => $present_gas,
+        'present_gas' => $present_gas,
         'present_humms' => $present_humms,
         'present_tvl' => $present_tvl,
         'present_cookery' => $present_cookery,
@@ -192,18 +357,6 @@ $present_g8 = DB::table('user_schoolyear')->where('schoolyear_start', $present_s
         'present_g11' => $present_g11,
         'present_g12' => $present_g12,
 
-        'male' => $male,
-        'female' => $female,
-
-        'old' => $old,
-        'returning' => $returning,
-        'transferee' => $returning,
-
-        'top_baranggay' => $top_baranggay,
-        'top_municipality' => $top_municipality,
-        'top_province' => $top_province,
-        'top_modality' => $top_modality,
-        'top_mothertounge' => $top_mothertounge
 
 
         ]);

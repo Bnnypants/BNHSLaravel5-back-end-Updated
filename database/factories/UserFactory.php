@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
+use Carbon\Carbon;
 
 class UserFactory extends Factory
 {
@@ -14,14 +15,16 @@ class UserFactory extends Factory
      */
     public function definition()
     {
+          $birthday = $this->faker->date($format = 'Y-m-d', $max = 'now');
+          $age =  Carbon::parse($birthday)->age;
         return [
-             'name' => $this->faker->firstName(),
+             'name' => strtoupper($this->faker->firstName()),
             'email' => $this->faker->unique()->safeEmail(),
             'email_verified_at' => now(),
             'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
             'remember_token' => Str::random(10),
-            'middlename' => $this->faker->lastName(),
-            'lastname' => $this->faker->lastName(),
+            'middlename' => strtoupper($this->faker->lastName()),
+            'lastname' => strtoupper($this->faker->lastName()),
             'lastschoolyearattended'=>$this->faker->randomElement([
 
             '2021',
@@ -30,10 +33,10 @@ class UserFactory extends Factory
             
             ]),
            'lastschoolattended'=>$this->faker->randomElement([
-            'Dalanguiring Integrated School',
-            'Urbiztondo Integrated School',
-            'Bayambang National Highschool',
-            'Abanon National Highschool'
+            'DALANGUIRING INTEGRATED SCHOOL',
+            'URBIZTONDO INTEGRATED SCHOOL',
+            'BAYAMBANG NATIONAL HIGHSCHOOL',
+            'ABANON NATIONAL HIGHSCHOOL'
 
             ]),
 
@@ -47,8 +50,10 @@ class UserFactory extends Factory
            'gradeleveltoenrolin'=>$this->faker->randomElement([
 
    
+         
            'Grade 11',
            'Grade 12'
+            
             
             ]),
 
@@ -63,171 +68,190 @@ class UserFactory extends Factory
           'accepted_as'=>$this->faker->randomElement([
 
            'Promoted',
-           'Conditionally Promoted',
-           'Failed' 
-
+       
            ]),
            'studenttype'=>$this->faker->randomElement([
 
            'Old Student',
            'Balik Aral/Returning Student',
-           'Transferee' 
+           'Transferee/Moving In' 
 
            ]),
 
            'permanenthousenumber'=> $this->faker->regexify('[0-9]{4}'),
+           'permanentzipcode'=> $this->faker->regexify('[0-9]{4}'),
+           'permanentstreet'=>$this->faker->randomElement([
 
+            'RIZAL',
+            'BONIFACIO',
+            'ABAD'
+            
+            ]),
+            'permanentcountry'=>$this->faker->randomElement([
+
+            'PHILIPPINES'
+
+            ]),
            'permanentbaranggay'=>$this->faker->randomElement([
 
-            'Dalanguiring',
-            'Malayo',
-            'Real',
-            'Poblacion'
+            'DALANGUIRING',
+            'MALAYO',
+            'REAL',
+            'POBLACION'
                        
+            ]),
+
+            'birthplace'=>$this->faker->randomElement([
+
+            'URBIZTONDO',
+            'BAYAMBANG',
+            'SAN CARLOS'
+            
             ]),
 
            'permanentmunicipality'=>$this->faker->randomElement([
 
-            'Urbiztondo',
-            'Bayambang',
-            'San Carlos'
+            'URBIZTONDO',
+            'BAYAMBANG',
+            'SAN CARLOS'
             
             ]),
            'permanentprovince'=>$this->faker->randomElement([
 
-            'Pangasinan'
+            'PANGASINAN'
             
             ]),
 
            'currenthousenumber'=> $this->faker->regexify('[0-9]{4}'),
+           'currentzipcode'=> $this->faker->regexify('[0-9]{4}'),
+           'currentstreet'=>$this->faker->randomElement([
+
+            'RIZAL',
+            'BONIFACIO',
+            'ABAD'
+            
+            ]),
+     
+            'currentcountry'=>$this->faker->randomElement([
+
+            'PHILIPPINES'
+            
+            ]),
+
 
            'currentbaranggay'=>$this->faker->randomElement([
 
-            'Dalanguiring',
-            'Malayo',
-            'Real',
-            'Poblacion'
+             'DALANGUIRING',
+            'MALAYO',
+            'REAL',
+            'POBLACION'
                        
             ]),
 
            'currentmunicipality'=>$this->faker->randomElement([
 
-            'Urbiztondo',
-            'Bayambang',
-            'San Carlos'
+
+            'URBIZTONDO',
+            'BAYAMBANG',
+            'SAN CARLOS'
             
             ]),
            'currentprovince'=>$this->faker->randomElement([
 
-            'Pangasinan'
+            'PANGASINAN'
             
             ]),
             'phonenumber'=>$this->faker->numberBetween(63556841720,63556841700),
             'fatherphonenumber'=>$this->faker->numberBetween(63556841720,63556841700),
             'motherphonenumber'=>$this->faker->numberBetween(63556841720,63556841700),
             'guardianphonenumber'=>$this->faker->numberBetween(63556841720,63556841700),
-         'birthday'=>$this->faker->date($format = 'Y-m-d', $max = 'now') ,
-            'age'=>$this->faker->numberBetween(12,25),
-           'sex'=>$this->faker->randomElement(['male', 'female']),
+
+         'birthday'=> $birthday,
+            'age'=> $age,
+           'sex'=>$this->faker->randomElement(['Male', 'Female']),
            'mothertongue'=>$this->faker->randomElement([
 
-             'Aklanon',
-              'Bikol',
-              'Cebuano',
-              'Chavacano',
-              'English',
-              'Filipino',
-              'Hiligaynon',
-              'Ibinag',
-              'Ilocano',
-              'Ivatan',
-              'Kapampangan',
-              'Kinaray-a',
-              'Maguindanao',
-              'Maranao',
-              'Pangasinan'
+             'AKLANON',
+              'BIKOL',
+              'CEBUANO',
+              'CHAVACANO',
+              'ENGLISH',
+              'FILIPINO',
+              'HILIGAYNON',
+              'IBINAG',
+              'ILOKANO',
+              'IVATAN',
+              'KAPAMPANGAN',
+              'KINARAY-A',
+              'MAGUINDANAO',
+              'MARANAO',
+              'PANGASINAN'
 
                ]),
 
-           'religion'=>$this->faker->randomElement([
-
-            "Roman Catholic",
-            "Muslim/Islamic",
-            "Catholic",
-            "Born Again",
-            "Buddhists",
-            "Atheist",
-            "Protestants",
-            "El Shaddai",
-            "Church of the Nazarene",
-            "Church of Jesus Christ and the Latter Day Saints",
-            "Seventh-Day Adventists (Central Phil. Union Conf.)",
-            "Maguindanao",
-            "Hindu",
-            "Mennonites",
-            "Philippine Episcopal Church",
-            "United Church of Christ in the Philippines",
-            "Evangelical",
-            "Baptist World Alliance",
-            "Methodist",
-            "Judaism",
-            "Ang Dating Daan",
-            "Worldwide Church of God",
-            "Jehovah's Witnesses",
-            "Assemblies of God (Ilocos Norte)",
-            "God World Missions Church",
-            "Presbyterian",
-            "Lutheran Church in the Philippines",
-            "Mount Banahaw Holy Confederation",
-            "Rizalistas",
-            "Aglipayan (Philippine Independence Church)",
-            "Iglesia ni Cristo (Church of Christ)",
-            "Philippine Benevolent Missionary Association (PBMA)",
-
-            ]),
-
             'indegenouscommunity'=>$this->faker->randomElement([
 
-            "Tagalog",
-            "Ilokano",
-            "Kapampangan",
-            "Bikolano",
-            "Aeta",
-            "Igorot",
-            "Ivatan",
-            "Mangyan",
-            "Cebuano",
-            "Waray",
-            "Ilonggo",
-            "Ati",
-            "Saludnon",
-            "Badjao",
-            "Yakan",
-            "B'laan",
-            "Maranao",
-            "T'boli",
-            "Tausug",
-            "Bagobo"
+            "TAGALOG",
+            "ILOKANO",
+            "KAPAMPANGAN",
+            "BIKOLANO",
+            "AETA",
+            "IGOROT",
+            "IVATAN",
+            "MANGYAN",
+            "CEBUANO",
+            "WARAY",
+            "ILONGGO",
+            "ATI",
+            "SALUDNON",
+            "BADJAO",
+            "YAKAN",
+            "B'LAAN",
+            "MARANAO",
+            "T'BOLI",
+            "TAUSUG",
+            "BAGOBO"
 
             ]),
             'generalaverage'=> $this->faker->numberBetween(75,85),
             'lrnnumber' => $this->faker->numberBetween(100000000000,200000000000),
-            'psastatus'=>$this->faker->randomElement(['Yes','No']),
-            'psanumber'=>  $this->faker->numberBetween(10000000000, 20000000000),
-            'fatherfirstname'=> $this->faker->firstName(),
-            'fathermiddlename'=> $this->faker->lastName(),
-            'fatherlastname'=> $this->faker->lastName(),
-            'motherfirstname'=> $this->faker->firstName(),
-            'mothermiddlename'=> $this->faker->lastName(),
-            'motherlastname'=> $this->faker->lastName(),
-            'guardianfirstname'=> $this->faker->firstName(),
-            'guardianmiddlename'=> $this->faker->lastName(),
-            'guardianlastname'=> $this->faker->lastName(),
+            'psastatus'=>$this->faker->randomElement(['YES','NO']),
+            'psanumber'=>  $this->faker->numberBetween(100000000000,200000000000),
+
+            'fatherfirstname'=> strtoupper($this->faker->firstName()),
+            'fathermiddlename'=> strtoupper($this->faker->lastName()),
+            'fatherlastname'=> strtoupper($this->faker->lastName()),
+            'motherfirstname'=> strtoupper($this->faker->firstName()),
+            'mothermiddlename'=> strtoupper($this->faker->lastName()),
+            'motherlastname'=> strtoupper($this->faker->lastName()),
+            'guardianfirstname'=> strtoupper($this->faker->firstName()),
+            'guardianmiddlename'=> strtoupper($this->faker->lastName()),
+            'guardianlastname'=> strtoupper($this->faker->lastName()),
             'updated'=>$this->faker->randomElement(['Yes', 'No']),
             'semester'=>$this->faker->randomElement(['1st', '2nd']),
             'schoolid'=> $this->faker->regexify('[0-9]{6}'),
-             'indigency'=> $this->faker->regexify('[0-9]{6}'),
-            'section'=>$this->faker->numberBetween(1,10)
+             'indigency'=> $this->faker->regexify('[0-9]{18}'),
+          
+
+            'last_reviewed_by'=>$this->faker->randomElement([
+
+            "51"
+      
+
+            ]),
+
+           'birthcertificate'=>$this->faker->randomElement([
+
+            "example.jpg"
+
+            ]),
+            'reportcard'=>$this->faker->randomElement([
+
+            "example.jpg"
+
+            ])
+           
+           
            
         ];
     }

@@ -27,29 +27,35 @@
       <table class="table table-hover" id="table">
         <thead>
           <tr>
- <th scope="col">LRN</th>
-
-            <th scope="col">First Name</th>
-            <th scope="col">Middle Name</th>
-            <th scope="col">Last Name</th>
+             <th scope="col">Enrolled at:</th>
+             <th scope="col">LRN</th>
+            <th scope="col">Name</th>
             <th scope="col">Grade</th>
+            <th scope="col">PSA/Birth Certificate/NSO</th>
+            <th scope="col">SF9/Report Card</th>
             <th scope="col">Grade Level to Enrol Into</th>
             <th scope="col">Strand</th>
             <th scope="col">Section to be Enrolled Into</th>
+            <th scope="col">Last Reviewed By:</th>
 
-            <th scope="col">PSA/Birth Certificate/NSO</th>
-            <th scope="col">SF9/Report Card</th>
             <th scope="col">Action</th>
           </tr>
         </thead>
         <tbody>
           @foreach($users as $user)
           <tr>
+             <td scope="row">{{$user ->email_verified_at}}</td>
             <td scope="row">{{$user ->lrnnumber}}</td>
-            <td>{{$user ->name}}</th>
-            <td>{{$user ->middlename}}</td>
-            <td>{{$user ->lastname}}</td>
+            <td>{{$user ->name}} {{$user ->lastname}}</td>
             <td>{{$user ->generalaverage}}</td>
+
+                <td>
+              <a class="btn btn-outline-secondary" href="{{url('admin/birthcertificate',$user->id) }}" role="button">View Requirement</a>
+            </td>
+            <td>
+              <a class="btn btn-outline-secondary" href="{{url('admin/reportcard',$user->id) }}" role="button">View Requirement</a>
+            </td>
+
             <td>{{$user ->gradeleveltoenrolin}}</td>
             <td>{{$user ->strandtoenrolin}}</td>
 
@@ -59,28 +65,36 @@
 @endphp
 
  <td>
-  @isset($section)
+  
+
+@php
+
+if(($user->gradeleveltoenrolin == 'Grade 11') ||($user->gradeleveltoenrolin == 'Grade 12')){
+  $section =  DB::table('sections')->where('grade',$user->gradeleveltoenrolin)->where('strand',$user->strandtoenrolin)->where('lower_gwa','<=',$user->generalaverage)->where('upper_gwa','>=',$user->generalaverage)->where('admission_status','Yes')->first();
+}
+else{
+   $section =  DB::table('sections')->where('grade',$user->gradeleveltoenrolin)->where('lower_gwa','<=',$user->generalaverage)->where('upper_gwa','>=',$user->generalaverage)->where('admission_status','Yes')->first();
+}
+
+  $reviewed_by = DB::table('users')->where('id',$user->last_reviewed_by)->first();
+@endphp
+
+@isset($section)
 
 @php
  $adviser =  DB::table('teachers')->where('advisory',$section->id)->first();
 @endphp
 
-Section Number : {{$section->section_number}} 
-
 @isset($adviser)
- <br> Adviser :{{$adviser->firstname}} {{$adviser->middlename}} {{$adviser->lastname}} 
+ Section Number : {{$section->section_number}}<br> Adviser :{{$adviser->firstname}} {{$adviser->middlename}} {{$adviser->lastname}} 
  @endisset
 
- @endisset
+@endisset
+
 
   </td>
-
-            <td>
-              <a class="btn btn-outline-secondary" href="{{url('admin/birthcertificate',$user->id) }}" role="button">View Requirement</a>
-            </td>
-            <td>
-              <a class="btn btn-outline-secondary" href="{{url('admin/reportcard',$user->id) }}" role="button">View Requirement</a>
-            </td>
+ <td>@isset( $reviewed_by){{$reviewed_by->name}} {{$reviewed_by->lastname}} @endisset</td>
+        
             <td>
 
 

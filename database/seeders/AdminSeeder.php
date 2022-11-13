@@ -17,10 +17,11 @@ class AdminSeeder extends Seeder
     {
          $user = DB::table('users')->insert([
 
-            'name' => 'Admin',
-            'middlename' => 'Admin',
-            'lastname' => 'Admin',
+            'name' => 'Maria',
+            'middlename' => 'Leonora',
+            'lastname' => 'Teresa',
             'email' => 'admin@gmail.com',
+            'phonenumber' => '639556841720',
             'section' => 'Not Applicable',
             'email_verified_at' => Carbon::now(),
             'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi' // password

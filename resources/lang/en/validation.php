@@ -12,7 +12,7 @@ return [
     | as the size rules. Feel free to tweak each of these messages here.
     |
     */
-
+    'alpha_spaces' => 'The :attribute may only contain letters and spaces.',
     'accepted' => 'The :attribute must be accepted.',
     'accepted_if' => 'The :attribute must be accepted when :other is :value.',
     'active_url' => 'The :attribute is not a valid URL.',
@@ -122,7 +122,7 @@ return [
         'string' => 'The :attribute must be :size characters.',
         'array' => 'The :attribute must contain :size items.',
     ],
-    'starts_with' => 'The :attribute must start with one of the following: :values.',
+    'starts_with' => 'The :attribute must start with : :values.',
     'string' => 'The :attribute must be a string.',
     'timezone' => 'The :attribute must be a valid timezone.',
     'unique' => 'The :attribute has already been taken.',

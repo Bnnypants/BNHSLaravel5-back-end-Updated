@@ -13,7 +13,9 @@ class Sections extends Model
             'upper_gwa',
             'lower_gwa',
             'grade',
-            'strand'
+            'strand',
+            'admission_limit',
+            'admission_status'   
            ];
     public function users()
     {

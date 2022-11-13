@@ -11,51 +11,40 @@
   <script src="https://code.jquery.com/jquery-1.12.3.js"></script>
   <script src="htpps://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
   <script src="https://cdn.datatables.net/1.10.12/js/dataTables.bootstrap.min.js"></script>
+
   <link rel="stylesheet" href="https://cdn.datatables.net/1.10.12/css/dataTables.bootstrap.min.css">
   <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/uicons-regular-rounded/css/uicons-regular-rounded.css'>
   <script src="{{asset('js/app.js') }}" defer> </script>
-
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.10.12/css/dataTables.bootstrap.min.css">
+  <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/uicons-regular-rounded/css/uicons-regular-rounded.css'>
+  <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/uicons-regular-straight/css/uicons-regular-straight.css'>
+  <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/uicons-brands/css/uicons-brands.css'>
 <link rel="stylesheet" href="https://www.cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.css" />
 <script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
 <script src="https://code.jquery.com/jquery-1.8.2.min.js"></script>
+ <link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;600;700;800&display=swap" rel="stylesheet">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>
-  <title>
-    @if (Request::is('index') || Request::is('/'))
-    {{ 'BNHS Enrollment System' }}
-    @elseif (Request::is('user/about'))
-    {{ 'About' }}
-    @elseif (Request::is('user/contact'))
-    {{ 'Contact' }}
-    @elseif (Request::is('login'))
-    {{ 'Login' }}
-    @elseif (Request::is('register'))
-    {{ 'Register' }}
-    @elseif (Request::is('forgot-password'))
-    {{ 'Forgot Password' }}
-    @elseif (Request::is('user/verify'))
-    {{ 'Email Verification' }}
-    @elseif (Request::is('admin/users/create*'))
-    {{ 'Create New Admin' }}
-    @elseif (Request::is('admin/users*'))
-    {{ 'Applications | New' }}
-    @elseif (Request::is('admin/birthcertificate*'))
-    {{ 'Applications | Birth Certificate' }}
-    @elseif (Request::is('admin/reason*'))
-    {{ 'Applications | Rejection Reason' }}
-    @elseif (Request::is('admin/updated*'))
-    {{ 'Applications | Updated' }}
-    @elseif (Request::is('admin/rejected*'))
-    {{ 'Applications | Rejected' }}
-    @elseif (Request::is('admin/accepted*'))
-    {{ 'Applications | Accepted' }}
-    @elseif (Request::is('email/verify*'))
-    {{ 'Verify Email' }}
-
-    @endif
-  </title>
+   <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet"> 
+  <title>BNHS Enrolment System</title>
 </head>
-
+ 
 <body>
+  <div id="page-content-wrapper">
+    <div id='rss'>
+      <span>
+        <i class="fi fi-rs-marker"></i> Basista, Pangasinan, Philippines
+      </span>
+      <span>
+             @php
+          $id = Auth::id();
+          $login = DB::table('users')->where('id', $id)->first();
+          @endphp
+ 
+                    @isset($login )<b>Logged in as, {{$login->name}} {{$login->lastname}} </b>@endisset()
+      </span>
+    </div>  
+
   <div id="page-content-wrapper">
     <nav id="navbar">
       <a href={{ url('index')}} id="navbar-logo-brand">
@@ -63,6 +52,7 @@
         <span id="system-name">
           <span>Basista National High School</span>
           <small>Enrollment System</small>
+
         </span>
       </a>
 
@@ -140,7 +130,7 @@
 
 
 
-          @endif
+          @endif   
           @endauth
         </ul>
       </div>
@@ -149,12 +139,11 @@
 
     <main id="main">
       @include('partials.alerts')
-      @yield('content')
+      @yield('content') 
       @can('logged-in')
       @endcan()
     </main>
-
-    <footer>
+  <footer>
       <img src={{URL::asset('logo.png')}} alt="" id="footer-logo">
       <span id="copyright">
         &copy; Copyright 2022 <br> Basista National High School
@@ -186,21 +175,22 @@
 
     $(function() {
       var mothertongue = [
-        "Aklanon",
-        "Bikol",
-        "Cebuano",
-        "Chavacano",
-        "English",
-        "Filipino",
-        "Hiligaynon",
-        "Ibinag",
-        "Ilocano",
-        "Ivatan",
-        "Kapampangan",
-        "Kinaray-a",
-        "Maguindanao",
-        "Maranao",
-        "Pangasinan"
+              'AKLANON',
+              'BIKOL',
+              'CEBUANO',
+              'CHAVACANO',
+              'ENGLISH',
+              'FILIPINO',
+              'HILIGAYNON',
+              'IBINAG',
+              'ILOKANO',
+              'IVATAN',
+              'KAPAMPANGAN',
+              'KINARAY-A',
+              'MAGUINDANAO',
+              'MARANAO',
+              'PANGASINAN'
+
       ];
       $("#mothertongue").autocomplete({
         source: mothertongue
@@ -209,70 +199,238 @@
 
     $(function() {
       var IndegenousCommunitySpecification = [
-        "Tagalog",
-        "Ilokano",
-        "Kapampangan",
-        "Bikolano",
-        "Aeta",
-        "Igorot",
-        "Ivatan",
-        "Mangyan",
-        "Cebuano",
-        "Waray",
-        "Ilonggo",
-        "Ati",
-        "Saludnon",
-        "Badjao",
-        "Yakan",
-        "B'laan",
-        "Maranao",
-        "T'boli",
-        "Tausug",
-        "Bagobo"
+            "TAGALOG",
+            "ILOKANO",
+            "KAPAMPANGAN",
+            "BIKOLANO",
+            "AETA",
+            "IGOROT",
+            "IVATAN",
+            "MANGYAN",
+            "CEBUANO",
+            "WARAY",
+            "ILONGGO",
+            "ATI",
+            "SALUDNON",
+            "BADJAO",
+            "YAKAN",
+            "B'LAAN",
+            "MARANAO",
+            "T'BOLI",
+            "TAUSUG",
+            "BAGOBO"
       ];
       $("#IndegenousCommunitySpecification").autocomplete({
         source: IndegenousCommunitySpecification
       });
     });
-    $(function() {
-      var religion = [
-        "Roman Catholic",
-        "Muslim/Islamic",
-        "Catholic",
-        "Born Again",
-        "Buddhists",
-        "Atheist",
-        "Protestants",
-        "El Shaddai",
-        "Church of the Nazarene",
-        "Church of Jesus Christ and the Latter Day Saints",
-        "Seventh-Day Adventists (Central Phil. Union Conf.)",
-        "Maguindanao",
-        "Hindu",
-        "Mennonites",
-        "Philippine Episcopal Church",
-        "United Church of Christ in the Philippines",
-        "Evangelical",
-        "Baptist World Alliance",
-        "Methodist",
-        "Judaism",
-        "Ang Dating Daan",
-        "Worldwide Church of God",
-        "Jehovah's Witnesses",
-        "Assemblies of God (Ilocos Norte)",
-        "God World Missions Church",
-        "Presbyterian",
-        "Lutheran Church in the Philippines",
-        "Mount Banahaw Holy Confederation",
-        "Rizalistas",
-        "Aglipayan (Philippine Independence Church)",
-        "Iglesia ni Cristo (Church of Christ)",
-        "Philippine Benevolent Missionary Association (PBMA)",
+
+        $(function() {
+      var currentbaranggay = [
+       "ANAMBONGAN",
+       "BAYOYONG",
+       "CABELDETAN",
+       "DUMPAY",
+       "MALIMPEC EAST",
+       "MAPOLOPOLO",
+       "NALNERAN",
+       "NAVATAT",
+       "OBONG",
+       "OSMENA SR.",
+       "PALMA",
+       "PATACBO",
+       "POBLACION"
+
       ];
-      $("#religion").autocomplete({
-        source: religion,
+      $("#currentbaranggay").autocomplete({
+        source: currentbaranggay
       });
     });
+
+        $(function() {
+      var permanentbaranggay = [
+       "ANAMBONGANAN",
+       "BAYOYONG",
+       "CABELDATAN",
+       "DUMPAY",
+       "MALIMPEC EAST",
+       "MAPOLOPLO",
+       "NALNERAN",
+       "NAVATAT",
+       "OBONG",
+       "OSMENA SR.",
+       "PALMA",
+       "PATACBO",
+       "POBLACION"
+
+      ];
+      $("#permanentbaranggay").autocomplete({
+        source: permanentbaranggay
+      });
+    });
+    $(function() {
+      var birthplace = [
+
+      "AGNO",
+      "AGUILAR",
+      "ALCALA",
+      "ANDA",
+      "ASINGAN",
+      "BALUNGAO",
+      "BANI",
+      "BASISTA",
+      "BAUTISTA",
+      "BAYAMBANG",
+      "BINALONAN",
+      "BINMALEY",
+      "BOLINAO",
+      "BUGALLON",
+      "BURGOS",
+      "CALASIAO",
+      "DASOL",
+      "INFANTA",
+      "LABRADOR",
+      "LAOAC",
+      "LINGAYEN",
+      "MABINI",
+      "MALASIQUI",
+      "MANAOAG",
+      "MANGALDAN",
+      "MANGATAREM",
+      "MAPANDAN",
+      "NATIVIDAD",
+      "POZORRUBIO",
+      "ROSALES",
+      "SAN FABIAN",
+      "SAN JACINTO",
+      "SAN MANUEL",
+      "SAN NICOLAS",
+      "SAN QUINTIN",
+      "SANTA BARBARA",
+      "SANTA MARIA",
+      "SANTO TOMAS",
+      "SAN CARLOS",
+      "SISON",
+      "SUAL",
+      "TAYUG",
+      "UMINGAN",
+      "URBIZTONDO",
+      "VILLASIS"
+      ];
+      $("#birthplace").autocomplete({
+        source: birthplace,
+      });
+    });
+
+$(function() {
+      var permanentmunicipality = [
+
+      "AGNO",
+      "AGUILAR",
+      "ALCALA",
+      "ANDA",
+      "ASINGAN",
+      "BALUNGAO",
+      "BANI",
+      "BASISTA",
+      "BAUTISTA",
+      "BAYAMBANG",
+      "BINALONAN",
+      "BINMALEY",
+      "BOLINAO",
+      "BUGALLON",
+      "BURGOS",
+      "CALASIAO",
+      "DASOL",
+      "INFANTA",
+      "LABRADOR",
+      "LAOAC",
+      "LINGAYEN",
+      "MABINI",
+      "MALASIQUI",
+      "MANAOAG",
+      "MANGALDAN",
+      "MANGATAREM",
+      "MAPANDAN",
+      "NATIVIDAD",
+      "POZORRUBIO",
+      "ROSALES",
+      "SAN FABIAN",
+      "SAN JACINTO",
+      "SAN MANUEL",
+      "SAN NICOLAS",
+      "SAN QUINTIN",
+      "SANTA BARBARA",
+      "SANTA MARIA",
+      "SANTO TOMAS",
+      "SAN CARLOS",
+      "SISON",
+      "SUAL",
+      "TAYUG",
+      "UMINGAN",
+      "URBIZTONDO",
+      "VILLASIS"
+      ];
+      $("#permanentmunicipality").autocomplete({
+        source: permanentmunicipality,
+      });
+    });
+
+
+$(function() {
+      var currentmunicipality = [
+      "AGNO",
+      "AGUILAR",
+      "ALCALA",
+      "ANDA",
+      "ASINGAN",
+      "BALUNGAO",
+      "BANI",
+      "BASISTA",
+      "BAUTISTA",
+      "BAYAMBANG",
+      "BINALONAN",
+      "BINMALEY",
+      "BOLINAO",
+      "BUGALLON",
+      "BURGOS",
+      "CALASIAO",
+      "DASOL",
+      "INFANTA",
+      "LABRADOR",
+      "LAOAC",
+      "LINGAYEN",
+      "MABINI",
+      "MALASIQUI",
+      "MANAOAG",
+      "MANGALDAN",
+      "MANGATAREM",
+      "MAPANDAN",
+      "NATIVIDAD",
+      "POZORRUBIO",
+      "ROSALES",
+      "SAN FABIAN",
+      "SAN JACINTO",
+      "SAN MANUEL",
+      "SAN NICOLAS",
+      "SAN QUINTIN",
+      "SANTA BARBARA",
+      "SANTA MARIA",
+      "SANTO TOMAS",
+      "SAN CARLOS",
+      "SISON",
+      "SUAL",
+      "TAYUG",
+      "UMINGAN",
+      "URBIZTONDO",
+      "VILLASIS"
+     
+      ];
+      $("#currentmunicipality").autocomplete({
+        source: currentmunicipality
+      });
+    });
+
 
 
     function yesnoCheck() {
@@ -289,8 +447,8 @@
 
     function yesnoCheck1() {
       if (document.getElementById('yesCheck1').checked) {
-        document.getElementById('ifYes1').style.display = 'grid';
-      } else document.getElementById('ifYes1').style.display = 'none';
+        document.getElementById('ifYes1').style.visibility = 'visible';
+      } else document.getElementById('ifYes1').style.visibility = 'hidden';
 
     }
 
@@ -317,8 +475,8 @@
 
      function IndigencyyesnoCheck() {
       if (document.getElementById('indigencyradio').checked) {
-        document.getElementById('indigencynumber').style.display = 'grid';
-      } else document.getElementById('indigencynumber').style.display = 'none';
+        document.getElementById('indigencynumber').style.visibility = 'visible';
+      } else document.getElementById('indigencynumber').style.visibility = 'hidden';
 
     }
 
@@ -587,9 +745,19 @@ function myFunction() {
   var checkBox = document.getElementById("myCheck");
   var text = document.getElementById("text1");
   if (checkBox.checked == true){
-   text.style.display = "none"; 
+   text.style.display = "block";
   } else {
-     text.style.display = "block";
+     text.style.display = "none";
+  }
+}
+
+function myFunction2() {
+  var checkBox = document.getElementById("banana");
+  var text = document.getElementById("extension_name");
+  if (checkBox.checked == true){
+    text.style.display = "block";
+  } else {
+   text.style.display = "none"; 
   }
 }
 
@@ -724,7 +892,57 @@ function  Password() {
       }
     }
 
+            var coll = document.getElementsByClassName("collapsible");
+    var i;
 
+    for (i = 0; i < coll.length; i++) {
+      coll[i].addEventListener("click", function() {
+        this.classList.toggle("active");
+        var content = this.nextElementSibling;
+        if (content.style.maxHeight) {
+          content.style.maxHeight = null;
+        } else {
+          content.style.maxHeight = content.scrollHeight + "px";
+        }
+      });
+    }
+
+
+
+let slideIndex = 1;
+    showSlides(slideIndex);
+
+    function plusSlides(n) {
+      showSlides(slideIndex += n);
+    }
+
+    function currentSlide(n) {
+      showSlides(slideIndex = n);
+    }
+
+    function showSlides(n) {
+      let i;
+      let slides = document.getElementsByClassName("mySlides");
+      let dots = document.getElementsByClassName("dot");
+      if (n > slides.length) {
+        slideIndex = 1
+      }
+      if (n < 1) {
+        slideIndex = slides.length
+      }
+      for (i = 0; i < slides.length; i++) {
+        slides[i].style.display = "none";
+      }
+      for (i = 0; i < dots.length; i++) {
+        dots[i].className = dots[i].className.replace(" activeCarousel", "");
+      }
+      slides[slideIndex - 1].style.display = "block";
+      dots[slideIndex - 1].className += " activeCarousel";
+    }
+
+    setInterval(() => {
+      document.querySelector('.next').click();
+    }, 5000);
 
         
 

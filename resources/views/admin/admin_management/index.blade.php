@@ -14,7 +14,44 @@
         
       </div>
     </div>
+    <div class="card">
 
+        <table class="table table-hover" id="table">
+          <tbody>
+            <tr>
+            <td>{{$current_user ->name}}</th>
+            <td>{{$current_user ->middlename}}</td>
+            <td>{{$current_user ->lastname}}</td>
+            <td>{{$current_user ->email}}</td>
+            <td>{{$current_user ->phonenumber}}</td>
+            <td>
+
+
+              {{-- <form action="{{route('admin.users.destroy',$user->id) }}" method ="POST" >
+              @method("DELETE")--}}
+      
+
+
+              <div class="btn-toolbar mb-3" role="toolbar" aria-label="Toolbar with button groups">
+                <div class="btn-group me-2" role="group" aria-label="First group">
+                     <a class="btn btn-md btn-warning" href="{{route('admin.management.edit',$current_user->id) }}" role="button">Edit</a>
+      
+  
+      
+                
+                </div>
+              </div>
+
+
+            </td>
+          </tr>
+            
+          </tbody>
+        </table>
+      
+    </div>
+
+<br>
     <div class="container-fluid p-0 m-0">
      <div id="search-table" class="form-field">
         <input type="search" placeholder="Search Queries" class="form-control search-input" data-table="table" />
@@ -51,12 +88,12 @@
 
               {{-- <form action="{{route('admin.users.destroy',$user->id) }}" method ="POST" >
               @method("DELETE")--}}
-              @csrf
+      
 
 
               <div class="btn-toolbar mb-3" role="toolbar" aria-label="Toolbar with button groups">
                 <div class="btn-group me-2" role="group" aria-label="First group">
-                     <a class="btn btn-md btn-warning" href="{{route('admin.management.edit',$user->id) }}" role="button">Edit</a>
+                  
       
                   <a class="btn btn-md btn-danger" href="{{route('admin.management.show',$user->id) }}" role="button">Disable</a>
       

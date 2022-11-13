@@ -18,6 +18,10 @@ class Reset extends Controller
 {
     public function __invoke(Request $request)
     {
+$request->validate([
+    'password' => 'required|string|min:8|confirmed|regex:/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{6,}$/',
+]);
+//dd('fail'); 
 
   $schoolyear = SchoolYear::where('status','active')->orWhere('status','paused')->first();
 
@@ -27,31 +31,19 @@ class Reset extends Controller
       $email = $request['email'];
       $user = User::where('email',$email)->first();
 
-if(($user->gradeleveltoenrolin == 'Grade 11') || ($user->gradeleveltoenrolin == 'Grade 12') ){
+if(($user->gradeleveltoenrolin == 'Grade 11') ||($user->gradeleveltoenrolin == 'Grade 12')){
+  $section =  DB::table('sections')->where('grade',$user->gradeleveltoenrolin)->where('strand',$user->strandtoenrolin)->where('lower_gwa','<=',$user->generalaverage)->where('upper_gwa','>=',$user->generalaverage)->where('admission_status','Yes')->first();
+}
+else{
 
-     $section =  DB::table('sections')->where('grade',$user->gradeleveltoenrolin)->where('strand',$user->strandtoenrolin)->where('lower_gwa','<',$user->generalaverage)->where('upper_gwa','>',$user->generalaverage)->first();
+$section =  DB::table('sections')->where('grade',$user->gradeleveltoenrolin)->where('lower_gwa','<=',$user->generalaverage)->where('upper_gwa','>=',$user->generalaverage)->where('admission_status','Yes')->first();
+}
 
-    }
 
-  else{
-
- $section =  DB::table('sections')->where('grade',$user->gradeleveltoenrolin)->where('lower_gwa','<',$user->generalaverage)->where('upper_gwa','>',$user->generalaverage)->first();
-
-  }  
-  //dd($user->gradeleveltoenrolin);
-
-        $user->section = $section->id;
+// /dd($section);
+if (isset($section)) {
+         $user->section = $section->id;
         $user->save();
-
-     DB::table('user_schoolyear')->insert([
-
-            'lrnnumber' =>  $user->lrnnumber,
-            'schoolyear_start' => $schoolyear->year_start,
-            'schoolyear_end' => $schoolyear->year_end,
-            'grade' =>  $user->gradeleveltoenrolin,
-            'strand' =>  $user->strandtoenrolin
-      
-             ]);
 
 
       if( $request['password'] == $request['password_confirmation'])
@@ -61,10 +53,19 @@ if(($user->gradeleveltoenrolin == 'Grade 11') || ($user->gradeleveltoenrolin == 
             'password' => Hash::make($request['password']),
         ])->save();
 
-       $request->session()->flash('success','You are now offically enrolled!');
+       $request->session()->flash('success','Note: You will be officially enrolled once you submit your physical enrolment form and requirements to BNHS');
        return view('auth/login');
      }
        $request->session()->flash('error','Passwords do not match');
        return redirect(URL::signedRoute('student.resetview',['email' => $email]));
+}
+else{
+   $request->session()->flash('error','Something went wrong please contact the administrator');
+       return redirect(URL::signedRoute('student.resetview',['email' => $email]));
+}
+  
+
+
+
  }
 }

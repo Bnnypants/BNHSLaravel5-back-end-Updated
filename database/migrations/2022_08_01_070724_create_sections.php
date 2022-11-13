@@ -20,6 +20,9 @@ class CreateSections extends Migration
             $table->string('lower_gwa')->nullable();;
             $table->string('grade')->nullable();;
             $table->string('strand')->nullable();
+            $table->string('admission_count')->nullable();
+            $table->string('admission_limit')->nullable();
+            $table->string('admission_status')->nullable();
             $table->timestamps();
         });
     }

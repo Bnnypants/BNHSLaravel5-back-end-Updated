@@ -91,8 +91,15 @@ class AnnouncementsController extends Controller
      */
     public function edit($id)
     {
+      
+        $grades = DB::table('announcements_grades')->where('announcements_id',$id)->get();
+    
        
-        return view('admin.announcements.edit',[ 'announcement' => DB::table('announcements')->where('id',$id)->first()]);
+        return view('admin.announcements.edit',
+            [ 'announcement' => DB::table('announcements')->where('id',$id)->first(),
+
+            'grades' => $grades
+    ]);
     }
 
     /**
@@ -120,6 +127,7 @@ class AnnouncementsController extends Controller
                $announcement->content = $request['specification'];
                $announcement->title = $request['title'];
                $announcement->image =  $filename;
+               $announcement->grades()->sync($request['gradelevel']);
                $announcement->save();
 
               $request->session()->flash('success','Announcement has been updated');
@@ -130,10 +138,16 @@ class AnnouncementsController extends Controller
 
     else{
 
+    
+        
+         
+
                $announcement = Announcements::find($id);
                $announcement->content = $request['specification'];
                $announcement->title = $request['title'];
+                $announcement->grades()->sync($request['gradelevel']);
                $announcement->save();
+
 
                $request->session()->flash('success','Announcement has been updated');
 

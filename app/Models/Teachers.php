@@ -18,6 +18,7 @@ class Teachers extends Model
         'middlename',
         'lastname',
         'email',
+        'status',
         'phonenumber'
     ];
 

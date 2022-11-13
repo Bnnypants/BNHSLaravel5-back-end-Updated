@@ -9,7 +9,7 @@ use App\Models\User;
 use Illuminate\Validation\Rule;
 use Laravel\Fortify\Contracts\UpdatesUserProfileInformation;
 use Illuminate\Support\Facades\URL;
-
+use Illuminate\Support\Facades\Validator;
 class UpdateUserProfileInformation implements UpdatesUserProfileInformation
 {
     /**
@@ -22,6 +22,81 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
     public function update($user, array $input)
     {
 //dd($input);
+            $this->validate($input, [
+
+            'email'=> 'required|max:255|unique:users',
+            'name' => 'required|alpha_spaces|max:255',
+            'middlename' => 'sometimes|nullable|alpha_spaces|max:255',
+            'extension_name' => 'sometimes|nullable|alpha_spaces|max:255',
+
+          /*  'mothertongue' => 'required|alpha_spaces|max:255',
+            'birthplace' => 'required|alpha_spaces|max:255',
+
+            'lastname' => 'required||max:255|alpha_spaces',
+            'lrnnumber'=> 'required|digits:12|unique:users',
+            'phonenumber' => 'required|digits:11|starts_with:63|unique:users',
+
+            'indigencyradio' => 'required|in:YES,NO',
+            'indegency' => 'sometimes|nullable|required_if:indigencyradio,YES|digits:18',
+
+            'indegenouscommunityradio' => 'required|in:YES,NO',
+            'indegenouscommunity' => 'sometimes|nullable|required_if:indegenouscommunityradio,YES|alpha_spaces',
+
+            'psastatus' => 'required|in:YES,NO',
+            'psanumber' => 'sometimes|nullable|required_if:psastatus,YES|digits:12',
+
+            'studenttype' => 'required|in:Old Student,Transferee,Balik Aral/Returning Student',
+
+            'lastschoolyearattended' => 'sometimes|nullable|required_if:studenttype,Transferee,Balik Aral/Returning Student|digits:4',
+
+            'lastschoolattended' => 'sometimes|nullable|required_if:studenttype,Transferee,Balik Aral/Returning Student|alpha_spaces',
+
+            'schoolid' => 'sometimes|nullable|required_if:studenttype,Transferee,Balik Aral/Returning Student|digits:6',
+
+
+            'fatherphonenumber' => 'required|digits:11|starts_with:63',
+            'motherphonenumber' => 'required|digits:11|starts_with:63',
+            'guardianphonenumber' => 'required|digits:11|starts_with:63',
+
+            'fatherfirstname' => 'required|max:255|alpha_spaces',
+            'fathermiddlename' => 'sometimes|nullable|alpha_spaces|max:255',
+            'fatherlastname' => 'required|max:255|alpha_spaces',
+
+            'guardianfirstname' => 'required|max:255|alpha_spaces',
+            'guardianmiddlename' => 'sometimes|nullable|alpha_spaces|max:255',
+            'guardianlastname' => 'required|max:255|alpha_spaces',
+
+            'motherfirstname' => 'required|max:255|alpha_spaces',
+            'mothermiddlename' => 'sometimes|nullable|alpha_spaces|max:255',
+            'motherlastname' => 'required|max:255|alpha_spaces',
+
+
+
+            'currentzipcode'=> 'required|digits:4',
+            'currenthousenumber'=> 'sometimes|nullable',
+            'currentstreet' => 'sometimes|nullable|max:255|alpha_spaces',
+            'currentbaranggay' => 'required|max:255|alpha_spaces',
+            'currentmunicipality' => 'required|max:255|alpha_spaces',
+            'currentcountry' => 'required|max:255|alpha_spaces',
+            'currentprovince' => 'required|max:255|alpha_spaces',
+
+            'permanentyes' => 'required|in:YES,NO',
+         
+            'permanentzipcode'=> 'sometimes|nullable|digits:4',
+            'permanenthousenumber'=> 'sometimes|nullable',
+            'permanentstreet' => 'sometimes|nullable|required_if:permanentyes,NO|max:255|alpha_spaces',
+            'permanentbaranggay' => 'sometimes|nullable|required_if:permanentyes,NO|max:255|alpha_spaces',
+            'permanentmunicipality' => 'sometimes|nullable|required_if:permanentyes,NO|max:255|alpha_spaces',
+            'permanentcountry' => 'sometimes|nullable|required_if:permanentyes,NO|max:255|alpha_spaces',
+            'permanentprovince' => 'sometimes|nullable|required_if:permanentyes,NO|max:255|alpha_spaces',
+
+            'modality' => 'required',
+
+            'chooseFile' => 'required|image',
+            'chooseFile2' => 'required|image' */
+          ]);
+
+dd('fail');
     $userrole = DB::table('role_user')->where('user_id', $input['id'])->first();
 
     $role = $userrole->role_id;

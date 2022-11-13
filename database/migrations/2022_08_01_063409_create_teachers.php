@@ -20,9 +20,11 @@ class CreateTeachers extends Migration
             $table->string('lastname')->nullable();
             $table->string('email')->unique()->nullable();
             $table->bigInteger('phonenumber')->nullable();
+            $table->string('status')->nullable();
 
             $table->string('advisory')->nullable();
             $table->timestamps();
+            
         });
     }
 

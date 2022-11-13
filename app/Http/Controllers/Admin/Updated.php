@@ -20,7 +20,7 @@ class Updated extends Controller
           if(Gate::allows('is-admin')){
 
     return view('admin.users.updated',['users'=> User::whereHas('roles', function($query) {
-      $query->whereNotNull('email_verified_at')->where('Updated','Yes')->where('name', 'pending');
+      $query->whereNotNull('email_verified_at')->where('Updated','Yes')->where('name', 'Pending');
 
       })->orderBy('id')->paginate(10)]);
 

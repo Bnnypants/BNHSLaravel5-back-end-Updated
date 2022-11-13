@@ -156,17 +156,14 @@ $grades = DB::table('announcements_grades')->where('announcements_id',$announcem
     </div>
       </div></td>
 
-              <form action="{{route('admin.announcements.destroy',$announcement->id) }}" method ="POST" >
-              @method("DELETE")
-              @csrf
+            
            <td>
 
               <div class="btn-toolbar mb-3" role="toolbar" aria-label="Toolbar with button groups">
                 <div class="btn-group me-2" role="group" aria-label="First group">
                   <a class="btn btn-md btn-warning" href="{{route('admin.announcements.show',$announcement->id) }}" role="button">View</a>
                   <a class="btn btn-md btn-success" href="{{route('admin.announcements.edit',$announcement->id) }}" role="button">Edit</a>
-                  <button type="submit" class="btn btn-md btn-danger"  role="button">Delete</button>
-                </form>
+              
                 </div>
               </div>
 

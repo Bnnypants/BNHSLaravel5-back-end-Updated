@@ -101,7 +101,7 @@ $adviser =  DB::table('teachers')->where('advisory', $section->id)->first();
       <div class="enrollment-form-field">
             <a class="btn btn-md btn-warning" href="{{route('faculty.sections.edit',$section->id) }}" role="button">Edit</a>
 
-      <a class="btn btn-md btn-danger" href="" role="button">Delete</a>
+     
       <a style="font-size: 14px;" class="btn btn-warning" href="{{ URL::previous() }}" role="button">Back</a>
     </div>
   </div>

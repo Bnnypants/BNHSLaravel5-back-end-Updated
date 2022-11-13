@@ -6,7 +6,7 @@
 <link rel="stylesheet" href="/resources/demos/style.css">
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
-<script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
+
 <span id="enrollform-header">Enrollment Application Form</span>
 
 <form id="enrollment-form" method="POST" action="{{route('student.enroll')}}" enctype="multipart/form-data">
@@ -20,6 +20,9 @@
       <span id="acadyear">Academic Year 2022 - 2023</span>
     </center>
     <br>
+      <div class="form-info-header">
+      <span>NOTE : Please type in all "CAPS" (Caps Lock)</span>
+    </div>
     <hr>
     <div class="form-info-header">
       <span>Grade level and School Information</span>
@@ -39,13 +42,14 @@
       <div class="form-field" id="strandtoenrolin" style="visibility: hidden;">
         <label for="strandtoenrolin" class="form-label">Strand to Enroll In</label>
         <select name="strandtoenrolin" id="strandtoenrolin2">
-          <option data2="HUMMS" value="HUMMS">HUMMS</option>
-          <option data2="GAS" value="GAS">GAS</option>
-          <option data2="TVL" value="TVL">TVL</option>
-          <option data2="COOKERY" value="COOKERY">COOKERY</option>
-          <option data2="ICT" value="ICT">ICT</option>
-          <option data2="ABM" value="ABM">ABM</option>
-          <option data2="STEM" value="STEM">STEM</option>
+          <option data2="HUMMS" value="HUMMS"> Academics Track-HUMMS</option>
+          <option data2="GAS" value="GAS">Academic Track-GAS</option>
+          <option data2="ABM" value="ABM">Academics Track-ABM</option>
+          <option data2="STEM" value="STEM">Academics Track-STEM</option>
+          <option data2="TVL" value="TVL">Technical-Vocational-Livelihood Track - TVL</option>
+          <option data2="COOKERY" value="COOKERY">Technical-Vocational-Livelihood - COOKERY</option>
+          <option data2="ICT" value="ICT">Technical-Vocational-Livelihood - ICT</option>
+        
         </select>
       </div>
       <div class="form-field" id="semester" style="visibility: hidden;">
@@ -66,12 +70,12 @@
         <label for="returningstudent">Please Select One that Applies</label>
         <div class="form-field form-check @error('returningstudent') is-invalid |@enderror">
           <div>
-            <input class="form-check-input" type="radio" name="studenttype" id="studenttype" value="Old Student" {{ old('studenttype') ? 'checked' : ''}} onclick="hide1();">
+            <input class="form-check-input" type="radio" name="studenttype" id="studenttype" value="Old Student" {{ old('studenttype') ? 'checked' : ''}} onclick="hide1();" >
             <label for="returningstudent">Old Student</label>
           </div>
           <div>
-            <input class="form-check-input" type="radio" name="studenttype" id="studenttype" value="Transferee" {{ old('studenttype') ? 'checked' : ''}} onclick="show1();">
-            <label for="returningstudent">Transferee</label>
+            <input class="form-check-input" type="radio" name="studenttype" id="studenttype" value="Transferee/Moving In" {{ old('studenttype') ? 'checked' : ''}} onclick="show1();">
+            <label for="returningstudent">Transferee/Moving in</label>
           </div>
           <div>
             <input class="form-check-input" type="radio" name="studenttype" id="studenttype" value="Balik Aral/Returning Student" {{ old('studenttype') ? 'checked' : ''}} onclick="show1();">
@@ -89,14 +93,13 @@
         <label for="indegenouscommunityradio">Are you part of an indegenous community?</label>
         <div class="form-field form-check @error('indegenouscommunityradio') is-invalid |@enderror">
           <div>
-            <input class="form-check-input" type="radio" name="indegenouscommunityradio" id="yesCheck1" value="Yes" {{ old('indegenouscommunityradio') ? 'checked' : ''}} onclick="yesnoCheck1(); displayChange()">
+            <input class="form-check-input" type="radio" name="indegenouscommunityradio" id="yesCheck1" value="YES" {{ old('indegenouscommunityradio') ? 'checked' : ''}} onclick="yesnoCheck1(); displayChange()">
             <label for="returningstudent">Yes</label>
           </div>
           <div>
-            <input class="form-check-input" type="radio" name="indegenouscommunityradio" id="noCheck1" value="No" {{ old('indegenouscommunityradio') ? 'checked' : ''}} onclick="yesnoCheck1(); displayChange()">
+            <input class="form-check-input" type="radio" name="indegenouscommunityradio" id="noCheck1" value="NO" {{ old('indegenouscommunityradio') ? 'checked' : ''}} onclick="yesnoCheck1(); displayChange()" >
             <label for="indegenouscommunityradio">No</label>
           </div>
-
         </div>
         @error('indegenouscommunityradio')
         <span class="invalid-feedback" role="alert">
@@ -105,32 +108,35 @@
         @enderror
       </div>
 
-      <div class="form-field">
+
+    <div class="form-field">
         <label for="indigencyradio">Are you a member of 4Ps?</label>
         <div class="form-field form-check @error('indigencyradio') is-invalid |@enderror">
           <div>
-            <input class="form-check-input" type="radio" name="indigencyradio" id="indigencyradio" value="Yes" {{ old('indigencyradio') ? 'checked' : ''}} onclick="IndigencyyesnoCheck(); displayChange()">
-            <label for="indiginceyradio">Yes</label>
+            <input class="form-check-input" type="radio" name="indigencyradio" id="indigencyradio"  value="YES" {{ old('indigencyradio') ? 'checked' : ''}} onclick="IndigencyyesnoCheck(); displayChange()">
+            <label for="returningstudent">Yes</label>
           </div>
           <div>
-            <input class="form-check-input" type="radio" name="indigencyradio" id="indigencyradio" value="No" {{ old('indigencyradio') ? 'checked' : ''}} onclick="IndigencyyesnoCheck(); displayChange()">
-            <label for="indgencyradio">No</label>
+            <input class="form-check-input" type="radio" name="indigencyradio" id="indigencyradio"  value="NO" {{ old('indigencyradio') ? 'checked' : ''}} onclick="IndigencyyesnoCheck(); displayChange()" >
+            <label for="indigencyradio">No</label>
           </div>
-
         </div>
-        @error('indegincyradio')
+        @error('indigencyradio')
         <span class="invalid-feedback" role="alert">
           {{$message}}
         </span>
         @enderror
       </div>
+ 
+
 
 
 
     </div>
-    <div class="enrollment-form-field" id="glsi" style="grid-template-columns: 1fr 1fr !important;"> 
-      <div class="form-field" id="ifYes1" style="display: none">
-        <label for="indegenouscommunity" class="form-label">Please specifiy the indegenous group you belong to:</label>
+    <div class="enrollment-form-field" id="glsi" > 
+      <div class="form-field" style="visibility:hidden;"></div>
+      <div class="form-field" id="ifYes1">
+        <label for="indegenouscommunity" class="form-label">If yes, please specifiy the indegenous group you belong to:</label>
         <input name="indegenouscommunity" type="text" class="form-control @error('indegenouscommunity') is-invalid |@enderror" id="IndegenousCommunitySpecification" aria-describedby="indegenouscommunity" value="{{old('indegenouscommunity')}}">
         @error('indegenouscommunity')
         <span class="invalid-feedback" role="alert">
@@ -138,11 +144,11 @@
         </span>
         @enderror
 
-      </div>
-      <div class="form-field" id="indigencynumber" style="display: none">
-        <label for="indegency" class="form-label">What is your household 4Ps ID Number?</label>
-        <input name="indigency" type="number" class="form-control @error('indigency') is-invalid |@enderror" id="indigency" aria-describedby="indegency" value="{{old('indigency')}}">
-        @error('indegency')
+      </div>   
+      <div class="form-field" id="indigencynumber" >
+        <label for="indegency" class="form-label">If yes, what is your household 4Ps ID Number?</label>
+        <input name="indigency" placeholder="18 Digits" type="number" class="form-control @error('indigency') is-invalid |@enderror" id="indigency" aria-describedby="indegency" value="{{old('indigency')}}"maxlength="18" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);">
+        @error('indigency')
         <span class="invalid-feedback" role="alert">
           {{$message}}
         </span>
@@ -154,7 +160,10 @@
     <div class="form-info-header">
       <span>Student Information</span>
     </div>
+ 
+       
     <div class="enrollment-form-field">
+
       <div class="form-field">
         <label for="name">First Name</label>
         <input placeholder="Ex: Juan" name="name" type="text" class="@error('name') is-invalid |@enderror" id="name" aria-describedby="name" value="{{old('name')}}" required>
@@ -165,8 +174,8 @@
         @enderror
       </div>
       <div class="form-field">
-        <label for="middlename">Middle Name</label>
-        <input placeholder="Ex: Tamad" name="middlename" type="text" class="@error('middlename') is-invalid |@enderror" id="middlename" aria-describedby="middlename" value="{{old('middlename')}}" required>
+        <label for="middlename">Middle Name ( If without middlename, please skip )</label>
+        <input placeholder="Ex: Tamad" name="middlename" type="text" class="@error('middlename') is-invalid |@enderror" id="middlename" aria-describedby="middlename" value="{{old('middlename')}}" >
         @error('middlename')
         <span class="invalid-feedback" role="alert">
           {{$message}}
@@ -182,6 +191,21 @@
         </span>
         @enderror
       </div>
+       <div class="form-field">
+  
+      </div>
+    
+   <div id='extension_name' >
+        <div class="form-field" >
+        <label for="extension_name">Extension Name ( If without extension name, please skip )</label>
+        <input placeholder="Ex: Jr." name="extension_name" type="text" class="@error('extension_name') is-invalid |@enderror" id="extension_name" aria-describedby="lastname" value="{{old('extension_name')}}">
+        @error('extension_name')
+        <span class="invalid-feedback" role="alert">
+          {{$message}}
+        </span>
+        @enderror
+      </div>
+    </div>
     </div>
     <hr>
     <div class="form-info-header">
@@ -190,8 +214,17 @@
     <div class="enrollment-form-field" style="grid-template-columns: auto 1fr 1fr 1fr;">
       <div class="form-field">
         <label for="currenthousenumber">House Number</label>
-        <input placeholder="##/###" style="width: 7rem;" name="currenthousenumber" type="number" class="@error('currenthousenumber') is-invalid |@enderror" id="currenthousenumber" aria-describedby="currenthousenumber" value="{{old('currenthousenumber')}}" required>
+        <input placeholder="##/###" style="width: 7rem;" name="currenthousenumber" type="number" class="@error('currenthousenumber') is-invalid |@enderror" id="currenthousenumber" aria-describedby="currenthousenumber" value="{{old('currenthousenumber')}}">
         @error('currenthousenumber')
+        <span class="invalid-feedback" role="alert">
+          {{$message}}
+        </span>
+        @enderror
+      </div>
+            <div class="form-field">
+        <label for="currentbaranggay">Street</label>
+        <input placeholder="Current Baranggay" name="currentstreet" type="text" class="@error('currentstreet') is-invalid |@enderror"  aria-describedby="currentstreet" value="{{old('currentbaranggay')}}">
+        @error('currentstreet')
         <span class="invalid-feedback" role="alert">
           {{$message}}
         </span>
@@ -215,28 +248,67 @@
         </span>
         @enderror
       </div>
-      <div class="form-field">
+ 
+    </div>
+        <div class="enrollment-form-field" style="grid-template-columns: auto 1fr 1fr 1fr;">
+  
+             <div class="form-field">
         <label for="currentprovince">Province</label>
-        <input placeholder="Current Province" name="currentprovince" type="text" class="@error('currentprovince  ') is-invalid |@enderror" id="currentprovince" aria-describedby="currentprovince  " value="{{old('currentprovince')}}" required>
+        <input placeholder="Current Province" name="currentprovince" type="text" class="@error('currentprovince') is-invalid |@enderror" id="currentbaranggay" aria-describedby="currentprovince" value="{{old('currentprovince')}}" required>
         @error('currentprovince')
         <span class="invalid-feedback" role="alert">
           {{$message}}
         </span>
         @enderror
       </div>
-    </div>
-    <div class="form-info-header">
-      <span>Permanent Address</span>
-      <br>
-      <div class="form-check" style="margin-left: 1.5rem;">
-        <input class="form-check-input" type="checkbox" name="permanentyes" value="yes" {{ old('permanentyes') ? 'checked' : ''}} id="myCheck" onclick="myFunction();">
-        <label class="form-check-label" for="flexRadioDefault1">
-          My permanent address is the same with my current address
-        </label>
+       <div class="form-field">
+          <label for="currentzipcode">Zip Code ( Municipality )</label>
+             <input placeholder="4 Digits" name="currentzipcode" type="number" class="@error('currentzipcode') is-invalid |@enderror" id="permanentzipcode" aria-describedby="currentzipcode" value="{{old('currentzipcode')}}" maxlength="4" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" required >
+          @error('currentzipcode')
+          <span class="invalid-feedback" role="alert">
+            {{$message}}
+          </span>
+          @enderror
+        </div>
+          <div class="form-field">
+          <br>
+              <a class="btn btn-outline-secondary" href="https://sites.google.com/site/departmentofphilippines/philippine-zip-codes/provincial-zip-codes/pangasinan-zip-code" role="button">View Pangasinan Municipality Zip Codes</a>
+        </div>
+
+      <div class="form-field">
+        <label for="currentcountry">Country</label>
+        <input placeholder="Current Country" name="currentcountry" type="text" class="@error('currentcountry') is-invalid |@enderror" id="currentprovince" aria-describedby="currentcountry  " value="PHILIPPINES" required>
+        @error('currentcountry')
+        <span class="invalid-feedback" role="alert">
+          {{$message}}
+        </span>
+        @enderror
       </div>
 
+      </div>
+    <div class="form-info-header">
+            <div class="enrollment-form-field">
+      <div class="form-check" >
+        <input class="form-check-input" type="radio" name="permanentyes" value="YES" {{ old('permanentyes') ? 'checked' : ''}} id="permanentyes" style=" width: 1rem !important;  height: 1rem !important;" onclick="hide2()";>
+        <label class="form-check-label" for="flexRadioDefault1">
+        My current address is my permanent address
+        </label>
+      </div>
+           <div class="form-check" >
+        <input class="form-check-input" type="radio" name="permanentyes" value="NO" {{ old('permanentyes') ? 'checked' : ''}} id="permanentyes" style=" width: 1rem !important;  height: 1rem !important;" onclick="show2()";>
+        <label class="form-check-label" for="flexRadioDefault1">
+        I have a different permanent address
+        </label>
+      </div>
+      <div class="form-field"></div>
+        </div>
+      <br>
+
+    
+
+
     </div>
-    <div id="text1">
+    <div id="add_teacher">
       <div class="enrollment-form-field" style="grid-template-columns: auto 1fr 1fr 1fr">
 
         <div class="form-field">
@@ -248,9 +320,18 @@
           </span>
           @enderror
         </div>
+             <div class="form-field">
+          <label for="permanentstreet">Street</label>
+          <input placeholder="Permanent Street" name="permanentstreet" type="text" class="@error('permanentstreet') is-invalid |@enderror"  aria-describedby="permanentstreet" value="{{old('permanentbaranggay')}}">
+          @error('permanentstreet')
+          <span class="invalid-feedback" role="alert">
+            {{$message}}
+          </span>
+          @enderror
+        </div>
         <div class="form-field">
           <label for="permanentbaranggay">Baranggay</label>
-          <input placeholder="Permanent Baranggay" name="permanentbaranggay" type="text" class="@error('permanentbaranggay') is-invalid |@enderror" id="permanentbaranggay" aria-describedby="permanentbaranggay" value="{{old('permanentbaranggay')}}">
+          <input placeholder="Permanent Baranggay" name="permanentbaranggay" type="text" class="@error('permanentbaranggay') is-invalid |@enderror"  id="permanentbaranggay" aria-describedby="permanentbaranggay" value="{{old('permanentbaranggay')}}">
           @error('permanentbaranggay')
           <span class="invalid-feedback" role="alert">
             {{$message}}
@@ -266,15 +347,43 @@
           </span>
           @enderror
         </div>
+      
+      </div>
+        <div class="enrollment-form-field" style="grid-template-columns: auto 1fr 1fr 1fr">
+
         <div class="form-field">
-          <label for="permanentprovince">Province</label>
-          <input placeholder="Permanent Province" name="permanentprovince" type="text" class="@error('permanentprovince  ') is-invalid |@enderror" id="permanentprovince" aria-describedby="permanentprovince  " value="{{old('permanentprovince')}}">
-          @error('permanentprovince')
+        <label for="permanentprovince">Province</label>
+        <input placeholder="Permanent Province" name="permanentprovince" type="text" class="@error('permanentprovince') is-invalid |@enderror" id="permanentprovince" aria-describedby="permanentprovince" value="{{old('permanentprovince')}}">
+        @error('permanentprovince')
+        <span class="invalid-feedback" role="alert">
+          {{$message}}
+        </span>
+        @enderror
+      </div>
+        <div class="form-field">
+          <label for="permanentzipcode">Zip Code ( Municipality )</label>
+             <input placeholder="4 Digits" name="permanentzipcode" type="number" class="@error('permanentzipcode') is-invalid |@enderror" id="permanentzipcode" aria-describedby="permanentzipcode" value="{{old('permanentzipcode')}}" maxlength="4" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" >
+          @error('permanentzipcode')
+          <span class="invalid-feedback" role="alert">
+            {{$message}}
+          </span>
+          @enderror
+      
+        </div>
+        <div class="form-field">
+          <br>
+              <a class="btn btn-outline-secondary" href="https://sites.google.com/site/departmentofphilippines/philippine-zip-codes/provincial-zip-codes/pangasinan-zip-code" role="button">View Pangasinan Municipality Zip Codes</a>
+        </div>
+        <div class="form-field">
+          <label for="permanentcountry">Country</label>
+          <input placeholder="Permanent Country" name="permanentcountry" type="text" class="@error('permanentcountry') is-invalid |@enderror"  aria-describedby="permanentcountry" value="PHILIPPINES" >
+          @error('permanentcountry')
           <span class="invalid-feedback" role="alert">
             {{$message}}
           </span>
           @enderror
         </div>
+   
       </div>
     </div>
     <div class="enrollment-form-field" style="grid-template-columns: 2.5fr 1.5fr auto auto 1fr;">
@@ -288,37 +397,39 @@
         @enderror
       </div>
       <div class="form-field">
-        <label for="phonenumber">Phone Number</label>
-        <input placeholder="###########" name="phonenumber" type="number" class="@error('phonenumber') is-invalid |@enderror" id="phonenumber" aria-describedby="PhoneNumber" value="{{old('phonenumber')}}" required>
+        <label for="phonenumber">Phone Number (63*********)</label>
+        <input placeholder="###########" name="phonenumber" type="number" class="@error('phonenumber') is-invalid |@enderror" id="phonenumber" aria-describedby="PhoneNumber" value="{{old('phonenumber')}}" required maxlength="11" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);">
         @error('phonenumber')
         <span class="invalid-feedback" role="alert">
-          {{$message}}
+          {{$message}}    
         </span>
         @enderror
       </div>
       <div class="form-field">
         <label for="birthday">Birthday</label>
-        <input placeholder="Birthday" style="width: 10rem;" name="birthday" type="text" class="@error('birthday') is-invalid |@enderror" id="birthday" aria-describedby="birthday" value="{{old('birthday')}}" required>
+        <input placeholder="Birthday" style="width: 10rem;" name="birthday" type="text" class="@error('birthday') is-invalid |@enderror" id="birthday" aria-describedby="birthday" value="{{old('birthday')}}" required readonly>
         @error('birthday')
         <span class="invalid-feedback" role="alert">
           {{$message}}
         </span>
         @enderror
       </div>
-      <div class="form-field">
-        <label for="age">Age</label>
-        <input placeholder="Age" style="width: 5rem;" name="age" type="number" class="@error('age') is-invalid |@enderror" id="age" aria-describedby="age" value="{{old('age')}}" required>
+       <div class="form-field">
+        <label for="age">Age </label>
+    
+        <input  readonly placeholder="##" name="age" type="number" class="@error('age') is-invalid |@enderror" id="age" aria-describedby="age" value="{{old('age')}}" maxlength="2"   required>
         @error('age')
-        <span class="invalid-feedback" role="alert">
+        <span id="ga-alert" class="invalid-feedback" role="alert">
           {{$message}}
         </span>
         @enderror
+      
       </div>
       <div class="form-field">
         <label for="sex">Sex</label>
         <div class="form-field form-check @error('sex') is-invalid |@enderror">
           <div>
-            <input class="form-check-input" type="radio" name="sex" id="sex" value="Male" {{ old('sex') ? 'checked' : ''}}>
+            <input class="form-check-input" type="radio" name="sex" id="sex" value="Male" {{ old('sex') ? 'checked' : ''}} checked>
             <label for="sex">Male</label>
           </div>
           <div>
@@ -336,7 +447,7 @@
     <div class="enrollment-form-field" style="grid-template-columns: 1fr 1fr;">
       <div class="form-field">
         <label for="mothertongue">Mother Tongue</label>
-        <input placeholder="Ex: Filipino, English" name="mothertongue" type="text" class="@error('mothertongue') is-invalid |@enderror" id="mothertongue" aria-describedby="mothertongue" value="{{old('mothertongue')}}" required>
+        <input placeholder="Ex: Pangasinan, Ilocano" name="mothertongue" type="text" class="@error('mothertongue') is-invalid |@enderror" id="mothertongue" aria-describedby="mothertongue" value="{{old('mothertongue')}}" required>
         @error('mothertongue')
         <span class="invalid-feedback" role="alert">
           {{$message}}
@@ -344,9 +455,9 @@
         @enderror
       </div>
       <div class="form-field">
-        <label for="religion">Religion</label>
-        <input placeholder="Religion" name="religion" type="text" class="  @error('religion') is-invalid |@enderror" id="religion" aria-describedby="religion" value="{{old('religion')}}" required>
-        @error('religion')
+        <label for="birthplace">Place of Birth ( Municipality )</label>
+        <input placeholder="Place of Birth ( Municipality )" name="birthplace" type="text" class="  @error('birthplace') is-invalid |@enderror" id="birthplace" aria-describedby="religion" value="{{old('birthplace')}}" required>
+        @error('birthplace')
         <span class="invalid-feedback" role="alert">
           {{$message}}
         </span>
@@ -359,9 +470,10 @@
     </div>
     <div class="enrollment-form-field" style="grid-template-columns: .6fr 1fr auto 1.5fr;">
       <div class="form-field">
-        <label for="generalaverage">General Weighted Average (GWA)</label>
-        <input placeholder="##" name="generalaverage" type="number" class="@error('generalaverage') is-invalid |@enderror" id="generalaverage" aria-describedby="generalaverage" value="{{old('generalaverage')}}" maxlength="2" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength); " min="75" max="99" onchange="
-        if (this.value < 75 || this.value > 99) { 
+        <label for="generalaverage">General Weighted Average  </label>
+        <br>
+        <input placeholder="###" name="generalaverage" type="number" class="@error('generalaverage') is-invalid |@enderror" id="generalaverage" aria-describedby="generalaverage" value="{{old('generalaverage')}}" maxlength="3" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength); " min="0" max="99" onchange="
+        if (this.value <= 0 || this.value > 100) { 
           this.style.borderColor = 'red'; 
           document.getElementById('ga-alert').style.display = 'block' 
           }
@@ -379,36 +491,52 @@
           Invalid Average
         </span>
       </div>
+
       <div class="form-field" id="LRNyes">
-        <label for="lrnnumber">Learner's Reference Number(LRN)</label>
-        <input placeholder="12 Digits" name="lrnnumber" type="number" class="@error('lrnnumber') is-invalid |@enderror" id="lrnnumber" aria-describedby="lrnnumber" value="{{$lrnnumber}}" maxlength="12" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" required>
+  <div class="form-check" >
+        <input class="form-check-input" type="checkbox" name="banana" value="yes" {{ old('banana') ? 'checked' : ''}} id="banana" checked readonly style="    width: 1rem !important;
+    height: 1rem !important;
+    padding: 0;
+    border-radius: 50px !important;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;">
+        <label class="form-check-label" for="flexRadioDefault1">
+          With LRN (Learner's Reference Number)
+        </label>
+      </div>
+<br>
+        
+        <input placeholder="12 Digits" name="lrnnumber" type="number" class="@error('lrnnumber') is-invalid |@enderror" id="lrnnumber" aria-describedby="lrnnumber" value="{{$lrnnumber}}" maxlength="12" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" required readonly>
         @error('lrnnumber')
         <span class="invalid-feedback" role="alert">
           {{$message}}
         </span>
         @enderror
       </div>
+      
       <div class="form-field">
         <label for="psastatus">Do you have your PSA?</label>
         <div class="form-field form-check @error('psastatus') is-invalid |@enderror">
           <div>
-            <input class="form-check-input" type="radio" name="psastatus" id="psastatus" value="Yes" onclick="javascript:PSAyesnoCheck()" ; {{ old('psastatus') ? 'checked' : ''}}>
+            <input class="form-check-input" type="radio" name="psastatus" id="psastatus" value="YES" onclick="javascript:PSAyesnoCheck()" ; {{ old('psastatus') ? 'checked' : ''}}>
             <label for="Yes">Yes</label>
           </div>
           <div>
-            <input class="form-check-input" type="radio" name="psastatus" id="psastatus" value="No" onclick="javascript:PSAyesnoCheck()" ; {{ old('psastatus') ? 'checked' : ''}}>
+            <input class="form-check-input" type="radio" name="psastatus" id="psastatus" value="NO" onclick="javascript:PSAyesnoCheck()" ; {{ old('psastatus') ? 'checked' : ''}} >
             <label for="No">No</label>
           </div>
         </div>
-        @error('PSA')
+        @error('psastatus')
         <span class="invalid-feedback" role="alert">
           {{$message}}
         </span>
         @enderror
       </div>
-      <div class="form-field" id="PSAyes" style="display: none">
-        <label for="PSAnumber">PSA Birth Certificate no. (If available upon enrolment)</label>
-        <input name="psanumber" type="number" class="@error('psanumber') is-invalid |@enderror" id="psanumber" aria-describedby="psanumber" value="{{old('psanumber')}}" minlength="10" maxlength="10" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);">
+      <div class="form-field" id="PSAyes" >
+        <label for="psanumber">PSA Birth Certificate no. (If available upon enrolment)</label>
+        <input placeholder="12 Digits" name="psanumber" type="number" class="@error('psanumber') is-invalid |@enderror" id="psanumber" aria-describedby="psanumber" value="{{old('psanumber')}}" minlength="12" maxlength="12" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);">
         @error('psanumber')
         <span class="invalid-feedback" role="alert">
           {{$message}}
@@ -482,7 +610,7 @@
       </div>
       <div class="form-field">
         <label for="fatherphonenumber">Father's Contact Number</label>
-        <input placeholder="###########" name="fatherphonenumber" type="number" class="@error('fatherphonenumber') is-invalid |@enderror" id="fatherphonenumber" aria-describedby="fatherphonenumber" value="{{old('fatherphonenumber')}}" required>
+        <input placeholder="###########" name="fatherphonenumber" type="number" class="@error('fatherphonenumber') is-invalid |@enderror" id="fatherphonenumber" aria-describedby="fatherphonenumber" value="{{old('fatherphonenumber')}}" required required maxlength="11" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);">
         @error('fatherphonenumber')
         <span class="invalid-feedback" role="alert">
           {{$message}}
@@ -520,7 +648,7 @@
       </div>
       <div class="form-field">
         <label for="motherphonenumber">Mother's Contact Number</label>
-        <input placeholder="###########" name="motherphonenumber" type="number" class="@error('motherphonenumber') is-invalid |@enderror" id="motherphonenumber" aria-describedby="motherphonenumber" value="{{old('motherphonenumber')}}" required>
+        <input placeholder="###########" name="motherphonenumber" type="number" class="@error('motherphonenumber') is-invalid |@enderror" id="motherphonenumber" aria-describedby="motherphonenumber" value="{{old('motherphonenumber')}}" required required maxlength="11" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);">
         @error('motherphonenumber')
         <span class="invalid-feedback" role="alert">
           {{$message}}
@@ -558,7 +686,7 @@
       </div>
       <div class="form-field">
         <label for="guardianphonenumber">Guardian's Contact Number</label>
-        <input placeholder="###########" name="guardianphonenumber" type="number" class="@error('guardianphonenumber') is-invalid |@enderror" id="guardianphonenumber" aria-describedby="guardianphonenumber" value="{{old('guardianphonenumber')}}" required>
+        <input placeholder="###########" name="guardianphonenumber" type="number" class="@error('guardianphonenumber') is-invalid |@enderror" id="guardianphonenumber" aria-describedby="guardianphonenumber" value="{{old('guardianphonenumber')}}"  required length="11"maxlength="11" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);">
         @error('guardianphonenumber')
         <span class="invalid-feedback" role="alert">
           {{$message}}
@@ -571,6 +699,11 @@
       <span>Preferred Distance Learning Modalyties</span>
     </div>
     <div class="enrollment-form-field" style="grid-template-columns:  3fr;">
+         @error('modality')
+        <span class="invalid-feedback" role="alert">
+          {{$message}}
+        </span>
+        @enderror
       <div class="form-field">
         <label>What distance learning modality/ies do you prefer for yourself or your child?</label>
         <div class="enrollment-form-field" style="grid-template-columns: 1fr 1fr 1fr 1fr; padding-left: 1.4rem;">
@@ -633,8 +766,9 @@
           </div>
         </div>
       </div>
+
     </div>
-    <div id="transfer" class="transferee" style="display: none;">
+    <div id="transfer" class="transferee">
       <div class="form-info-header">
         <hr>
         <span>For Returning Learner(Balik-Aral) and Those Who Will Transfer/Move In</span>
@@ -643,6 +777,14 @@
         <div class="form-field" id="gradeleveltoenrolin">
           <label for="gradeleveltoenrolin">Last Grade Level Completed</label>
           <select name="lastgradelevelcompleted" id="gradeleveltoenrolin">
+             <option id="grade6"  value="Kinder 1">Kinder 1</option>
+            <option id="grade6"  value="Kinder 1">Kinder 2</option>
+            <option id="grade6"  value="Grade 1">Grade 1</option>
+            <option id="grade6"  value="Grade 2">Grade 2</option>
+            <option id="grade6"  value="Grade 3">Grade 3</option>
+            <option id="grade6"  value="Grade 4">Grade 4</option>
+            <option id="grade6"  value="Grade 5">Grade 5</option>
+            <option id="grade6"  value="Grade 6">Grade 6</option>
             <option id="grade7" style="display: none;" data="Grade 7" value="Grade 7">Grade 7</option>
             <option id="grade8" style="display: none;" data="Grade 8" value="Grade 8">Grade 8</option>
             <option id="grade9" style="display: none;" data="Grade 9" value="Grade 9">Grade 9</option>
@@ -652,7 +794,7 @@
           </select>
         </div>
         <div class="form-field ">
-          <label for="lastschoolyearattended">Last School Year Completed</label>
+          <label for="lastschoolyearattended">Last School Year Completed </label>
           <input placeholder="YYYY" type="number" name="lastschoolyearattended" id="lastschoolyearattended" class="@error('lastschoolyearattended') is-invalid | @enderror" id="lastschoolyearattended" aria-describedby="lastschoolyearattended" value="{{old('lastschoolyearattended')}}" maxlength="4" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);">
           @error('lastschoolyearattended')
           <span class="invalid-feedback" role="alert">
@@ -671,7 +813,7 @@
         </div>
         <div class="form-field">
           <label for="schoolid">School ID</label>
-          <input placeholder="School ID" type="text" name="schoolid" id="schoolid" class="@error('schoolid') is-invalid | @enderror" id="schoolid" aria-describedby="schoolid" value="{{old('schoolid')}}">
+          <input placeholder="6 Digits" type="number" name="schoolid" id="schoolid" class="@error('schoolid') is-invalid | @enderror" id="schoolid" aria-describedby="schoolid" value="{{old('schoolid')}}"maxlength="6" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);">
           @error('schoolid')
           <span class="invalid-feedback" role="alert">
             {{$message}}
@@ -681,9 +823,15 @@
       </div>
     </div>
     <hr>
+        <div class="form-info-header">
+      <span>   By clicking "Submit" you hereby certify that the above information given are true and correct to the best of your knowledge and you allow the Department of Education to use your child’s details to 
+create and/or update his/her learner profile in the Learner Information System. The information herein shall be treated as confidential in compliance with the Data Privacy Act of 
+2012.</span>
+    </div>
+
     <div class="enrollment-form-field" style="display: flex; flex-direction: flex-end; justify-content: flex-end; align-items: center;">
       <button type="submit" id="submit-enrollment-application">Submit Enrollment Application</button>
-    </div>
-  </div>
+    </div> 
 </form>
+
 @endsection

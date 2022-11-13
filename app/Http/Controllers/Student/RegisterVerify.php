@@ -106,7 +106,7 @@ else{
         $this->validate($request, [
             'email'=> 'required|max:255|unique:users',
  
-           'lrnnumber' => 'required|unique:users']);
+           'lrnnumber' => 'required|digits:12|unique:users']);
 
     $url = URL::signedRoute('user.verifyconfirm' , ['email'=> $request['email'],'lrn'=> $request['lrnnumber']]);
         $verification =[

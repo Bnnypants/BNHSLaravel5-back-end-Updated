@@ -18,8 +18,8 @@ class SubjectTeachersScheduleSeeder extends Seeder
     
         'subjects_teachers_id' => '1',
         'section_id' => '1',
-        'start' => '8:00',
-        'end' => '9:00',
+        'start' => '08:00',
+        'end' => '09:00',
         'day' => 'Monday'
         ]);
 
@@ -27,8 +27,8 @@ class SubjectTeachersScheduleSeeder extends Seeder
     
         'subjects_teachers_id' => '1',
         'section_id' => '4',
-        'start' => '8:00',
-        'end' => '9:00',
+        'start' => '08:00',
+        'end' => '09:00',
         'day' => 'Tuesday'
         ]);
 
@@ -36,8 +36,8 @@ class SubjectTeachersScheduleSeeder extends Seeder
     
         'subjects_teachers_id' => '1',
         'section_id' => '5',
-        'start' => '8:00',
-        'end' => '9:00',
+        'start' => '08:00',
+        'end' => '09:00',
         'day' => 'Wednesday'
         ]);
 
@@ -45,7 +45,7 @@ class SubjectTeachersScheduleSeeder extends Seeder
 
         'subjects_teachers_id' => '2',
          'section_id' => '1',
-        'start' => '9:00',
+        'start' => '09:00',
         'end' => '10:00',
         'day' => 'Monday'
         ]);
@@ -72,16 +72,16 @@ class SubjectTeachersScheduleSeeder extends Seeder
 
         'subjects_teachers_id' => '5',
         'section_id' => '2',
-        'start' => '8:00',
-        'end' => '9:00',
+        'start' => '08:00',
+        'end' => '09:00',
         'day' => 'Monday'
         ]);
          DB::table('subjects_teachers_schedule')->insert([
 
         'subjects_teachers_id' => '5',
         'section_id' => '5',
-        'start' => '8:00',
-        'end' => '9:00',
+        'start' => '08:00',
+        'end' => '09:00',
         'day' => 'Tuesday'
         ]);
 
@@ -89,7 +89,7 @@ class SubjectTeachersScheduleSeeder extends Seeder
 
         'subjects_teachers_id' => '6',
         'section_id' => '2',
-        'start' => '9:00',
+        'start' => '09:00',
         'end' => '10:00',
         'day' => 'Monday'
 
@@ -117,8 +117,8 @@ class SubjectTeachersScheduleSeeder extends Seeder
 
         'subjects_teachers_id' => '9',
         'section_id' => '3',
-        'start' => '8:00',
-        'end' => '9:00',
+        'start' => '08:00',
+        'end' => '09:00',
              'day' => 'Monday'
         ]);
   
@@ -126,7 +126,7 @@ class SubjectTeachersScheduleSeeder extends Seeder
 
         'subjects_teachers_id' => '10',
          'section_id' => '3',
-        'start' => '9:00',
+        'start' => '09:00',
         'end' => '10:00',
              'day' => 'Monday'
     
@@ -135,7 +135,7 @@ class SubjectTeachersScheduleSeeder extends Seeder
 
         'subjects_teachers_id' => '10',
          'section_id' => '6',
-        'start' => '9:00',
+        'start' => '09:00',
         'end' => '10:00',
              'day' => 'Tuesday'
     

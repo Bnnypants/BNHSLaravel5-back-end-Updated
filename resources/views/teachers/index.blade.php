@@ -3,7 +3,7 @@
 
 <div id="enrollment-applications-container-base">
   <div id="enrollment-table-container">
-    <span id="enrollment-applications-container-base-header">BNHS Faculty Teachers<small id="enrolemt-application-updated-at"><i class="fi fi-rr-calendar"></i> Latest update: <?php echo date('m/d/y'); ?></small></span>
+    <span id="enrollment-applications-container-base-header">Active BNHS Faculty Teachers<small id="enrolemt-application-updated-at"><i class="fi fi-rr-calendar"></i> Latest update: <?php echo date('m/d/y'); ?></small></span>
 
 
     <div class="container-fluid p-0 m-0">
@@ -12,9 +12,16 @@
         <a href={{route('faculty.teachers.index') }} id="refresh"><i class="fi fi-rr-refresh"></i> Refresh Data</a>
 
       </div>
-
+          <div id="sort-div">
+      <!-- <label for="buttongroup" class="form-label">Sort by:</label> -->
+      <div class="btn-group" id="buttongroup" role="group">
+        <a type="button" class="btn {{ Request::is('teachers/users*') ? 'active-tab' : '' }}" href="{{route('faculty.teachers.index') }}" data-bs-toggle="button" autocomplete="off" aria-pressed="true">Active</a>
+        <a type="button" class="btn {{ Request::is('teachers/inactive*') ? 'active-tab' : '' }}" href="{{url('faculty/inactive') }}" data-bs-toggle="button" autocomplete="off" aria-pressed="true">Inactive</a>
+      </div>
+    </div>
+<div class="card">
    <div class="container-fluid p-0 m-0" id="AddOn">
-      <a class="btn btn-md btn-success"  onclick="show2();">Add</a>
+      <a class="btn btn-md btn-success"  onclick="show2();">Add New Teacher</a>
   </div> 
 
 
@@ -61,12 +68,12 @@
         </span>
         @enderror
       </div>
-      <div class="form-field">
-        <label for="phonenumber">Contact Number</label>
-        <input placeholder="###########" name="phonenumber" type="number" class="@error('phonenumber') is-invalid |@enderror" id="phonenumber" aria-describedby="phonenumber" value="{{old('phonenumber')}}" required>
+   <div class="form-field">
+        <label for="phonenumber">Phone Number (63*********)</label>
+        <input placeholder="###########" name="phonenumber" type="number" class="@error('phonenumber') is-invalid |@enderror" id="phonenumber" aria-describedby="PhoneNumber" value="{{old('phonenumber')}}" required maxlength="11" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);">
         @error('phonenumber')
         <span class="invalid-feedback" role="alert">
-          {{$message}}
+          {{$message}}    
         </span>
         @enderror
       </div>
@@ -80,7 +87,7 @@
 
   </form>
     </div>
-
+</div>
 
       <table class="table table-hover" id="table">
         <thead>
@@ -92,7 +99,6 @@
 
             <th scope="col">Email</th>
             <th scope="col">Contact Number</th>
-         
             <th scope="col">Action</th>
           </tr>
         </thead>
@@ -105,7 +111,7 @@
             <td>{{$teacher ->lastname}}</td>
             <td>{{$teacher ->email}}</td>
             <td>{{$teacher ->phonenumber}}</td>
-     
+
 
            
 
@@ -117,7 +123,7 @@
                    <a class="btn btn-md btn-warning" href="{{route('faculty.teachers.show',$teacher->id) }}" role="button">View</a>
                   <a class="btn btn-md btn-success" href="{{route('faculty.teachers.edit',$teacher->id) }}" role="button">Edit</a>
 
-      <a class="btn btn-md btn-danger" href="{{route('faculty.delete',$teacher->id) }}" role="button">Delete</a>
+      <a class="btn btn-md btn-danger" href="{{route('faculty.delete',$teacher->id) }}" role="button">Disable</a>
                     </div>
               </div>
 

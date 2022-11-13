@@ -16,6 +16,7 @@ class DatabaseSeeder extends Seeder
         // \App\Models\User::factory(10)->create();
         $this->call(UserSeeder::class);
         $this->call(RoleSeeder::class);
+            $this->call(AdminSeeder::class);
         $this->call(RoleUserSeeder::class);
         $this->call(ModalitySeeder::class);
         $this->call(ModalityUserSeeder::class);
@@ -30,9 +31,9 @@ class DatabaseSeeder extends Seeder
          $this->call(SubjectTeachersScheduleSeeder::class);
         $this->call(SectionAdviserID::class);
          $this->call(SchoolYearSeeder::class);
-       $this->call(AdminSeeder::class);
+   
         $this->call(AppealSeeder::class);
         $this->call(AnnouncementsSeeder::class);
-         //$this->call(UserSectionSeeder::class);
+         $this->call(UserSectionSeeder::class);
     }
 }

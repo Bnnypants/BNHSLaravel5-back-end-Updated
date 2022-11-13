@@ -30,7 +30,7 @@ class TeacherController extends Controller
           }
           if(Gate::allows('is-admin')){
 
-    return view('teachers.index',['teachers'=> Teachers::paginate(10)]);
+    return view('teachers.index',['teachers'=> Teachers::where('status','Active')->paginate(10)]);
 
           }
 
@@ -66,9 +66,11 @@ class TeacherController extends Controller
             'lastname',
             'phonenumber',
             'email'
-    
 
         ]));
+
+           $teacher->status = 'Active';
+           $teacher->save();
 
         $request->session()->flash('success','You have added a new teacher');
 
@@ -134,9 +136,32 @@ $teacher = Teachers::find($id);
      */
     public function destroy(Request $request,$id)
     {
-       Teachers::where('id',$id)->delete();
-       $request->session()->flash('success','Teacher have been removed from the database');
+
+         $teacher = Teachers::find($id);
+  //dd($teacher->status);
+         if($teacher->status == 'Inactive'){
+
+             $teacher->status = 'Active';
+           $teacher->save();
+
+        $request->session()->flash('success','Teacher have been marked as active');
+
+        return redirect(route('faculty.inactive'));
+
+         }
+
+        if($teacher->status == 'Active'){
+
+             $teacher->status = 'Inactive';
+           $teacher->save();
+
+        $request->session()->flash('success','Teacher have been marked as inactive');
 
         return redirect(route('faculty.teachers.index'));
+           
+         }
+         
+
+
     }
 }

@@ -1,11 +1,12 @@
 @if(session('success'))
-	<div class="alert alert-success" role="alert">
+<div id='alert-success'>
+	<div class="alert alert-success" style="color: #000000" role="alert">
  	{{session('success') }}
 	</div>
 @endif
 
 @if(session('error'))
-	<div class="alert alert-danger" role="alert">
+	<div class="alert alert-danger"  style="color: #000000" le="alert">
  	{{session('error') }}
 	</div>
 @endif

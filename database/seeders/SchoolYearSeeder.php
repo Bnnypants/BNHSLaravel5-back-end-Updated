@@ -37,13 +37,74 @@ class SchoolYearSeeder extends Seeder
 
            $user = DB::table('users')->where('id', $role_user->user_id)->first();
 
-             DB::table('user_schoolyear')->insert([
+            DB::table('user_schoolyear')->insert([
 
-            'lrnnumber' =>  $user->lrnnumber,
-            'schoolyear_start' => '2021',
-            'schoolyear_end'=> '2022',
-            'grade' =>  $user->gradeleveltoenrolin,
-            'strand' =>  $user->strandtoenrolin
+             'schoolyear_start' => '2021',
+            'schoolyear_end' => '2022',
+           'user_id' => $user->id,
+           'name' => $user->name,
+           'email' => $user->email,
+            'middlename' => $user->middlename,
+            'lastname' => $user->lastname,
+            'extensionname' => $user->extensionname,
+
+          'lastgradelevelcompleted' => $user->lastgradelevelcompleted,
+          'strandtoenrolin' => $user->strandtoenrolin,
+          'semester'=> $user->semester,
+          'studenttype'=> $user->studenttype,
+          'indegenouscommunity' => $user->indegenouscommunity,
+          'indigency'=> $user->indigency,
+
+          'currentstreet' => $user->currentstreet,
+          'currentzipcode' => $user->currentzipcode,
+          'currentcountry' => $user->currentcountry,
+          'currentbaranggay' => $user->currentbaranggay,
+          'currenthousenumber' => $user->currenthousenumber,
+          'currentbaranggay' => $user->currentbaranggay,
+          'currentmunicipality' => $user->currentmunicipality,
+          'currentprovince' => $user->currentprovince,
+
+          'permanentstreet' => $user->permanentstreet,
+          'permanentzipcode' => $user->permanentzipcode,
+          'permanentcountry' => $user->permanentcountry,
+          'permanenthousenumber'=> $user->permanenthousenumber,
+          'permanentbaranggay' => $user->permanentbaranggay,
+          'permanentmunicipality'=>$user->permanentmunicipality,
+          'permanentprovince'=>$user->permanentprovince,
+
+          'phonenumber'=>$user->phonenumber,
+          'birthday'=>$user->birthday, 
+          'age'=>$user->age,
+          'sex' =>$user->sex,
+          'mothertongue'=>$user->mothertongue,
+         
+          'birthplace' =>$user->birthplace,
+          'generalaverage' =>$user->generalaverage,
+          'lrnnumber' =>$user->lrnnumber,
+          'psastatus' =>$user->psastatus,
+          'psanumber' =>$user->psanumber,
+          'fatherfirstname' =>$user->fatherfirstname,
+          'fathermiddlename' =>$user->fathermiddlename,
+          'fatherlastname' =>$user->fatherlastname,
+          'fatherphonenumber' =>$user->fatherphonenumber,
+          'motherfirstname' =>$user->motherfirstname,
+          'mothermiddlename' =>$user->mothermiddlename,
+          'motherlastname' =>$user->motherlastname,
+          'motherphonenumber'=>$user->motherphonenumber,
+          'guardianfirstname' =>$user->guardianfirstname,
+          'guardianmiddlename'=>$user->guardianmiddlename,
+          'guardianlastname' =>$user->guardianlastname,
+          'guardianphonenumber'=>$user->guardianphonenumber,
+          'gradeleveltoenrolin' =>$user->gradeleveltoenrolin,
+          'lastschoolyearattended' =>$user->lastschoolyearattended,
+          'lastschoolattended' =>$user->lastschoolattended,
+          'schoolid'=>$user->schoolid,
+          'birthcertificate' =>  $user->birthcertificate,
+          'reportcard' =>  $user->reportcard,
+          'semester' => $user->semester,
+
+
+      
       
              ]);
 
@@ -55,54 +116,100 @@ class SchoolYearSeeder extends Seeder
 
              DB::table('user_schoolyear')->insert([
 
-            'lrnnumber' =>  $user->lrnnumber,
-            'schoolyear_start' => '2022',
-            'schoolyear_end'=> '2023',
-            'grade' =>  $user->gradeleveltoenrolin,
-            'strand' =>  $user->strandtoenrolin
-      
-             ]);
-
-          }
-            DB::table('user_schoolyear')->insert([
-
-            'lrnnumber' => '1111111111112',
-            'schoolyear_start' => '2021',
-            'schoolyear_end'=> '2022',
-            'grade' =>  'Grade 11',
-            'strand' =>  'TVL'
-      
-             ]);
-
-               DB::table('user_schoolyear')->insert([
-
-            'lrnnumber' => '1111111111113',
-            'schoolyear_start' => '2021',
+             'schoolyear_start' => '2021',
             'schoolyear_end' => '2022',
-            'grade' =>  'Grade 12',
-            'strand' =>  'HUMMS'
+            'user_id' => $user->id,
+            'email' => $user->email,
+           'name' => $user->name,
+            'middlename' => $user->middlename,
+            'lastname' => $user->lastname,
+            'extensionname' => $user->extensionname,
+
+          'lastgradelevelcompleted' => $user->lastgradelevelcompleted,
+          'strandtoenrolin' => $user->strandtoenrolin,
+          'semester'=> $user->semester,
+          'studenttype'=> $user->studenttype,
+          'indegenouscommunity' => $user->indegenouscommunity,
+          'indigency'=> $user->indigency,
+
+          'currentstreet' => $user->currentstreet,
+          'currentzipcode' => $user->currentzipcode,
+          'currentcountry' => $user->currentcountry,
+          'currentbaranggay' => $user->currentbaranggay,
+          'currenthousenumber' => $user->currenthousenumber,
+          'currentbaranggay' => $user->currentbaranggay,
+          'currentmunicipality' => $user->currentmunicipality,
+          'currentprovince' => $user->currentprovince,
+
+          'permanentstreet' => $user->permanentstreet,
+          'permanentzipcode' => $user->permanentzipcode,
+          'permanentcountry' => $user->permanentcountry,
+          'permanenthousenumber'=> $user->permanenthousenumber,
+          'permanentbaranggay' => $user->permanentbaranggay,
+          'permanentmunicipality'=>$user->permanentmunicipality,
+          'permanentprovince'=>$user->permanentprovince,
+
+          'phonenumber'=>$user->phonenumber,
+          'birthday'=>$user->birthday, 
+          'age'=>$user->age,
+          'sex' =>$user->sex,
+          'mothertongue'=>$user->mothertongue,
+         
+          'birthplace' =>$user->birthplace,
+          'generalaverage' =>$user->generalaverage,
+          'lrnnumber' =>$user->lrnnumber,
+          'psastatus' =>$user->psastatus,
+          'psanumber' =>$user->psanumber,
+          'fatherfirstname' =>$user->fatherfirstname,
+          'fathermiddlename' =>$user->fathermiddlename,
+          'fatherlastname' =>$user->fatherlastname,
+          'fatherphonenumber' =>$user->fatherphonenumber,
+          'motherfirstname' =>$user->motherfirstname,
+          'mothermiddlename' =>$user->mothermiddlename,
+          'motherlastname' =>$user->motherlastname,
+          'motherphonenumber'=>$user->motherphonenumber,
+          'guardianfirstname' =>$user->guardianfirstname,
+          'guardianmiddlename'=>$user->guardianmiddlename,
+          'guardianlastname' =>$user->guardianlastname,
+          'guardianphonenumber'=>$user->guardianphonenumber,
+          'gradeleveltoenrolin' =>$user->gradeleveltoenrolin,
+          'lastschoolyearattended' =>$user->lastschoolyearattended,
+          'lastschoolattended' =>$user->lastschoolattended,
+          'schoolid'=>$user->schoolid,
+          'birthcertificate' =>  $user->birthcertificate,
+          'reportcard' =>  $user->reportcard,
+          'semester' => $user->semester,
+      
       
              ]);
 
+          DB::table('user_schoolyear_modality')->insert([
 
-             DB::table('user_schoolyear')->insert([
+            'modality_id'=> '1',
+            'user_id' =>  $user->id
 
-            'lrnnumber' => '1111111111114',
-            'schoolyear_start' => '2021',
-            'schoolyear_end'=> '2022',
-            'grade' =>  'Grade 12',
-            'strand' =>  'ABM'
-      
-             ]);
+                  ]);
+     
+     if(($user->gradeleveltoenrolin == 'Grade 11') ||($user->gradeleveltoenrolin == 'Grade 12')){
+   $section =  DB::table('sections')->where('grade',$user->gradeleveltoenrolin)->where('strand',$user->strandtoenrolin)->where('lower_gwa','<=',$user->generalaverage)->where('upper_gwa','>=',$user->generalaverage)->first();
+    }
+    else{
+   $section =  DB::table('sections')->where('grade',$user->gradeleveltoenrolin)->where('lower_gwa','<=',$user->generalaverage)->where('upper_gwa','>=',$user->generalaverage)->first();
+    } 
+    if(isset($section)){
+         DB::table('users')->where('id',$user->id)->update([
+         'section' => $section->id
+          ]); 
+    }
+    else{
+         DB::table('users')->where('id',$user->id)->update([
+         'section' => Null
+          ]); 
+    }
+       
+          }
 
-             DB::table('user_schoolyear')->insert([
 
-            'lrnnumber' => '1111111111115',
-            'schoolyear_start' => '2021',
-            'schoolyear_end'=> '2022',
-            'grade' =>  'Grade 7',
-            'strand' => 'Not Applicable',
-      
-             ]);
+          
     }
 }

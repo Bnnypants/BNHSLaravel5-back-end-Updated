@@ -29,6 +29,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'name',
         'middlename',
         'lastname',
+        'extensionname',
         'email',
         'password',
           'lastgradelevelcompleted',
@@ -37,10 +38,16 @@ class User extends Authenticatable implements MustVerifyEmail
           'studenttype',
           'indegenouscommunity',
           'indegency',
+          'currentzipcode',
+          'currentstreet',
+          'currentcountry',
           'currenthousenumber',
           'currentbaranggay',
           'currentmunicipality',
           'currentprovince',
+          'permanentzipcode',
+          'permanentstreet',
+          'permanentcountry',
           'permanenthousenumber',
           'permanentbaranggay' ,
           'permanentmunicipality',
@@ -72,6 +79,7 @@ class User extends Authenticatable implements MustVerifyEmail
           'lastschoolattended' ,
           'schoolid',
           'birthcertificate', 
+          'birthplace', 
           'reportcard'
     ];
 

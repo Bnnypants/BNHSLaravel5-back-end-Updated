@@ -41,7 +41,7 @@
   </div>
     <div class="form-field">
     <label for="phonenumber">Phone Number</label>
-    <input name="phonenumber" type="number" class="@error('phonenumber') is-invalid |@enderror" id="phonenumber" aria-describedby="phonenumber" value="{{old('phonenumber')}} @isset($user){{$user->email}} @endisset">
+    <input name="phonenumber" placeholder= "63#########"type="number" class="@error('phonenumber') is-invalid |@enderror" id="phonenumber" aria-describedby="phonenumber" value="{{old('phonenumber')}}" required maxlength="11" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"> 
     @error('phonenumber')
     <span class="invalid feedback" role="alert">
       {{$message}}

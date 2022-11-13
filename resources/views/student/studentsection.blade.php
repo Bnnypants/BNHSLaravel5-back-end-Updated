@@ -7,13 +7,13 @@
       {{$student->name}} {{$student->middlename}} {{$student->lastname}}
  <small id="enrolemt-application-updated-at">Accepted as: {{$student->accepted_as}} </small>
  <small id="enrolemt-application-updated-at">@isset($back_section)Back subject/s to be taken at :{{$back_section->grade}} - {{$back_section->strand}} | {{$back_section->section_number}}@endisset() </small>
-      <small id="enrolemt-application-updated-at">{{$section->grade}} - {{$section->strand}} | {{$section->section_number}} </small>
+      <small id="enrolemt-application-updated-at">@isset($section){{$section->grade}} - {{$section->strand}} | {{$section->section_number}}@endisset </small>
 
-      <small id="enrolemt-application-updated-at">Adviser: {{$adviser->firstname}} {{$adviser->lastname}}</small>
+      <small id="enrolemt-application-updated-at">Adviser: @isset($adviser) {{$adviser->firstname}} {{$adviser->lastname}} @endisset</small>
 
     </span>
 
- 
+ @isset($adviser)
     <span id="enrollment-applications-container-base-header">
     Adviser: {{$adviser->firstname}} {{$adviser->lastname}}
 
@@ -22,7 +22,7 @@
    <small id="enrolemt-application-updated-at">Email: {{$adviser->email}}</small>
     </span>
 
-
+@endisset
       <table class="table table-hover" id="table">
         <thead>
           <tr>
@@ -34,7 +34,8 @@
           </tr>
         </thead>
         <tbody>
-          @foreach($subjects as $subject)
+  @isset($subjects)      
+    @foreach($subjects as $subject)
           <tr>
 @php
 
@@ -85,7 +86,8 @@ $teacher = DB::table('teachers')->where('id',$subjectteacher->teachers_id)->firs
 
 </tr>
         @endforeach
-@endisset()
+@endisset
+@endisset
         </tbody>
       </table>
 

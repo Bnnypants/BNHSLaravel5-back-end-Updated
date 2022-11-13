@@ -32,8 +32,9 @@
     </div>
 
     <div id="help-sec">
-      <a href="{{route('password.request')}}">Reset Password</a>
-      <a href="{{route('password.request')}}">My application form has been accepted  <br> / denied but I haven't received an email</a>
+      <a href="{{route('password.request')}}">Forgot Password</a>
+       <a href="{{route('user.email_update.create')}}">Reset Email</a>
+
     </div>
 
   </form>

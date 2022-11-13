@@ -10,7 +10,7 @@ class Reason extends Controller
 {
     public function __invoke(Request $request,$id)
     {
-    $id = $request->id;
+
      $user = User::where('id',$id)->first();
       
 

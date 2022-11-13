@@ -25,11 +25,14 @@ class StoreTeacherRequest extends FormRequest
     {
         return [
         
-            'firstname' => 'required|max:255',
-            'middlename' => 'required|max:255',
-            'lastname' => 'required|max:255',
-            'phonenumber' => 'required|max:11',
-            'email'=> 'required|max:255|unique:teachers'
+     
+            'email'=> 'required|max:255|unique:teachers',
+            'firstname' => 'required|alpha_spaces|max:255',
+            'middlename' => 'sometimes|nullable|alpha_spaces|max:255',
+
+            'lastname' => 'required|max:255|alpha_spaces',
+            'phonenumber' => 'required|digits:11|starts_with:63|unique:teachers',
+
         ];
     }
 }

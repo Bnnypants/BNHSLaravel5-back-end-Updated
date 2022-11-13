@@ -17,7 +17,7 @@
       @enderror
     </div>
     <div class="form-field">
-      <label for="password">Password</label>
+      <label for="password">Password <br></label>
       <input type="password" name="password" id="password" class="form-control @error('password') is-invalid |@enderror" value="" placeholder="Password">
       @error('password')
       <span class="invalid-feedback" role="alert">
@@ -34,6 +34,12 @@
       </span>
       @enderror
     </div>
+        <small>
+       ( Password must contain <br>one uppercase letter, one symbol <br>and a number )
+    </small>
+   
+    <br>
+     
     <br>
     <div class="form-field">
       <button type="submit" id="activate">Activate Account</button>

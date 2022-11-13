@@ -20,7 +20,7 @@ class ModalityUserSeeder extends Seeder
         User::all()->each(function($user) use ($modality){
             $user->modalities()->attach(
 
-                $modality->random(1)->pluck('id')
+                $modality->random(4)->pluck('id')
 
             );
 

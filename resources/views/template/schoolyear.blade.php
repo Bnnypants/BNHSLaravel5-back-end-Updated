@@ -4,10 +4,9 @@ $schoolyear =  DB::table('schoolyear')->where('status','active')->orWhere('statu
 $now = Carbon::now();
 $current = $now->year;
 	$p = 0;
+$a = 0;
 
 @endphp
-
-
 
 
     <span id="enrollment-applications-container-base-header">
@@ -42,15 +41,15 @@ $current = $now->year;
          </form>
       </div>
       <small id="enrolemt-application-updated-at">
-    	 Note: {{$note}}
+    	 <b>Note: {{$note}} </b>
     	</small>
 
     	<small id="enrolemt-application-updated-at"><i class="fi fi-rr-calendar"></i>
-    	Starts/Started at {{$schoolyear->enrolment_start}}
+    	<b> Starts/Started at {{$schoolyear->enrolment_start}} </b>
     	</small>
 
     	<small id="enrolemt-application-updated-at"><i class="fi fi-rr-calendar"></i>
-    	Ends/Ended at {{$schoolyear->enrolment_end}}
+    	<b> Ends/Ended at {{$schoolyear->enrolment_end}} </b>
     	</small>
 
     	<small id="enrolemt-application-updated-at">
@@ -205,19 +204,39 @@ $current = $now->year;
 
   </form>
 
+  @php
+
+
+$now = Carbon::now();
+$current = $now->year;
+
+$a = 0;
+
+@endphp
+
+
 <form method="POST" action=" {{route('faculty.schoolyear.store') }}" style="display:none;" id="new_schoolyear">
      @csrf
         <input type="hidden" name="current_schoolyear" value="{{$schoolyear->id}}">
     <span id="enrollment-applications-container-base-header" >
 
     Add New School Year
-         <div class="form-field">
+       <div class="form-field">
         <label for="lastgradelevelcompleted"> Year</label>
         <select name="year" id="lastgradelevelcompleted" >
-   
-       @while($p<10)
-       <option value="{{$year = $current++}}">{{$year}} - {{$year + 1}}</option>
-         @php $p++; @endphp
+
+  
+       @while($a<10)
+       <option value="{{$year = $current++}}"
+
+       @if($year == $schoolyear->year_start)
+
+       selected 
+
+       @endif
+
+       >{{$year}} - {{$year + 1}}</option>
+         @php $a++; @endphp
 
           @endwhile
 

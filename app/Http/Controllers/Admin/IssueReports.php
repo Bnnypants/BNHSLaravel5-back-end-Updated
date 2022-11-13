@@ -46,7 +46,7 @@ class IssueReports extends Controller
           }
           if(Gate::allows('is-admin')){
 
-    return view('admin.issue_reports.unsolved',['issues'=> DB::table('issue_reports')->where('status','resolved')->paginate(10),'id'=>Auth::id()]);
+    return view('admin.issue_reports.unsolved',['issues'=> DB::table('issue_reports')->where('status','solved')->paginate(10),'id'=>Auth::id()]);
 
           }
 
@@ -74,7 +74,7 @@ class IssueReports extends Controller
     {
   
    
-        $message = DB::table('issue_reports_reply')->where('issue_reports_id',$id)->where('user_id',$request['student_id'])->latest()->first();
+        $message = DB::table('issue_reports')->where('id',$id)->where('user_id',$request['student_id'])->latest()->first();
    //dd($message);
            return view('admin.issue_reports.reply',['message' => $message]);
     }
@@ -90,7 +90,7 @@ class IssueReports extends Controller
     
         $message = DB::table('issue_reports')->where('id',$id)->first();
 
-        if($message->status == 'resolved'){
+        if($message->status == 'solved'){
 
               DB::table('issue_reports')->where('id',$id)->update([
 
@@ -110,7 +110,7 @@ class IssueReports extends Controller
 
               DB::table('issue_reports')->where('id',$id)->update([
 
-             'status' =>  'resolved'
+             'status' =>  'solved'
     
 
              ]);

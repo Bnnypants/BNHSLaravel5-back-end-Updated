@@ -17,6 +17,7 @@ class RequestUser extends Controller
 {
     public function __invoke(Request $request)
     {
+
     
      $user = User::where('email',$request['email'])->first();
 
@@ -35,7 +36,7 @@ class RequestUser extends Controller
 
 
 
-    if($role == '1'){
+    if($role == '1' || $role == '2' ){
 
          Password::sendResetLink($request->only(['email']));
 
@@ -44,61 +45,12 @@ class RequestUser extends Controller
     return redirect(route('password.request'));
 
     }
+    else{
 
-
-    if($role == '2'){
-
-   $url = URL::signedRoute('student.surveyview' , ['id'=> $user->id]);
-        $surveydata =[
-
-            'body'=> 'Congratulations! Your application have been accepted.',
-            'message'=> 'Answer survey',
-            'url'=> $url,
-            'thankyou'=> 'This link expires in 3 days.'
-
-        ];
-
-        
-        Notification::send($user, new SurveyForm($surveydata));
-
-    $request->session()->flash('success','Your application has been accepted please check your email for further instructions');
-
-    return redirect(route('password.request'));
+          $request->session()->flash('error','You do not have permssion to reset your password');
+          return redirect(route('password.request'));
     }
 
-
-    if($role == '3'){
-
-
-
-        $url = URL::signedRoute('user.profile' , ['id'=> $user->id]);
-        $updatedata =[
-
-            'body'=> 'Your enrolment application  has been denied. Below are the reasons for its rejection:',
-             'specification'=> 'Please review your enrolment form',
-            'error'=> 'Check your requirements properly',
-            'message'=> 'You are allowed to update your form',
-            'url'=> $url,
-            'thankyou'=> 'You have 3 days to update your form'
-
-        ];
-
-    $user->updated = 'No';
-    $user->save();
-
-        
-        Notification::send($user, new UpdateForm($updatedata));
-
-    $request->session()->flash('success','You may update your form thru the email we sent.');
-
-    return redirect(route('password.request'));
-
-    }
-
-    $request->session()->flash('warning','Your application is still pending please be patient');
-
-   
-    return redirect(route('password.request'));
 
     }
 

@@ -4,9 +4,10 @@ namespace App\Http\Controllers\Admin;
 
 use Mail;
 use App\Notifications\UpdateForm;
-use App\Notifications\SurveyForm;
+use App\Notifications\EnrollmentFormAcceptance;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreUserRequest;
+use App\Http\Requests\StoreTeacherRequest;
 use App\Models\User;
 use App\Models\Role;
 use Illuminate\Http\Request;
@@ -18,6 +19,7 @@ use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Collection;
 use App\Notifications\EmailVerification;
 use Illuminate\Support\Facades\Hash;
+use Carbon\Carbon;
 
 
 class UserController extends Controller
@@ -36,7 +38,7 @@ class UserController extends Controller
           if(Gate::allows('is-admin')){
 
     return view('admin.users.index',['users'=> User::whereHas('roles', function($query) {
-      $query->whereNotNull('email_verified_at')->where('name', 'pending');
+      $query->whereNull('updated')->where('name', 'pending');
 
       })->orderBy('id')->paginate(10)]);
 
@@ -62,8 +64,17 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreUserRequest $request)
+    public function store(Request $request)
     {
+               $this->validate($request, [
+
+            'email'=> 'required|max:255|unique:users',
+            'name' => 'required|alpha_spaces|max:255',
+            'middlename' => 'sometimes|nullable|alpha_spaces|max:255',
+            'lastname' => 'required|max:255|alpha_spaces',
+            'phonenumber' => 'required|digits:11|starts_with:63|unique:users',
+
+        ]);
 
         $user = User::create($request->only([
             
@@ -75,6 +86,10 @@ class UserController extends Controller
             'password'   
 
         ]));
+     
+        $user->email_verified_at = Carbon::now();
+        $user->save();
+
 
         $user->roles()->attach(1);
 
@@ -93,10 +108,14 @@ class UserController extends Controller
      */
     public function show($id)
     {
+        $user = User::find($id);
        return view('admin.users.show',
         [
-            'roles'=>Role::all(),
-            'user' =>User::find($id)
+           
+            'user' =>User::find($id),
+            'modalities' =>DB::table('modality_user')->where('user_id',$id)->get(),
+            'rejection_messages' =>DB::table('rejection_messages')->where('user_id',$id)->orderBy('id','DESC')->get(),
+            'records' => DB::table('user_schoolyear')->where('lrnnumber',$user->lrnnumber)->get()
         ]);
     }
 
@@ -111,7 +130,9 @@ class UserController extends Controller
 
     $user = User::find($id);
 
-    if($user->gradeleveltoenrolin == 'Grade 12'){
+    if($user->studenttype == 'Old Student'){
+
+     if($user->gradeleveltoenrolin == 'Grade 12'){
 
         $gradeleveltoenrolin = 'Grade 11';
 
@@ -143,9 +164,18 @@ class UserController extends Controller
 
     if($user->gradeleveltoenrolin == 'Grade 7'){
 
-        $gradeleveltoenrolin = 'Grade 7';
+        $gradeleveltoenrolin = 'Grade 6';
 
     }
+
+    }
+    else{
+
+        $gradeleveltoenrolin = $user->lastgradelevelcompleted;
+
+    }
+
+   
 
 if(($gradeleveltoenrolin == 'Grade 11') || ($gradeleveltoenrolin == 'Grade 12') ){
 
@@ -202,7 +232,9 @@ else{
 
  $user = User::find($id);
 
-if($request['accepted_as'] == 'Conditionally Promoted'){
+if($user->lastgradelevelcompleted == 'Grade 8' || $user->lastgradelevelcompleted == 'Grade 9' || $user->lastgradelevelcompleted == 'Grade 10' || $user->lastgradelevelcompleted == 'Grade 11' || $user->lastgradelevelcompleted == 'Grade 12'){
+
+    if($request['accepted_as'] == 'Conditionally Promoted'){
 
     if(isset($request['subjects'])){
 
@@ -231,16 +263,44 @@ $request->session()->flash('error','Please choose a subject for the student to t
 
 }
 
+} 
+
+
+
+
         $user->accepted_as = $request['accepted_as'];
         $user->save();
 
+if(($user->gradeleveltoenrolin == 'Grade 11') ||($user->gradeleveltoenrolin == 'Grade 12')){
+
+  $section =  DB::table('sections')->where('grade',$user->gradeleveltoenrolin)->where('strand',$user->strandtoenrolin)->where('lower_gwa','<=',$user->generalaverage)->where('upper_gwa','>=',$user->generalaverage)->first();
+
+}
+else{
+
+   $section =  DB::table('sections')->where('grade',$user->gradeleveltoenrolin)->where('lower_gwa','<=',$user->generalaverage)->where('upper_gwa','>=',$user->generalaverage)->first();
+
+}
 
 
-       
-//dd('banana');
-        $userrole = DB::table('role_user')->where('user_id', $id)->first();
+$admission_count = $section->admission_count + 1;
 
-        $role = $userrole->role_id;
+if($admission_count >= $section->admission_limit)
+{
+    $admission_status = 'No';
+}
+else{
+
+ $admission_status = 'Yes';
+
+}
+
+DB::table('sections')->where('id',$section->id)->update([
+
+'admission_count' => $admission_count,
+'admission_status' => $admission_status,
+
+]);
  
         if(!$user){
 
@@ -260,21 +320,13 @@ $request->session()->flash('error','Please choose a subject for the student to t
         ];
 
         
-        Notification::send($user, new SurveyForm($surveydata));
+        Notification::send($user, new EnrollmentFormAcceptance($surveydata));
 
-        if($role = 4){
+        
 
-        $user->roles()->detach(4); 
-        $user->roles()->attach(2);
+        $user->roles()->sync(2); 
+        
 
-        }
-
-        if($role = 3){
-
-        $user->roles()->detach(3); 
-        $user->roles()->attach(4);
-
-        }
 
 
         $request->session()->flash('success','The user has been sent an account activation request');
@@ -291,7 +343,7 @@ $request->session()->flash('error','Please choose a subject for the student to t
     public function destroy($id,Request $request)
     {
 //decline student
-    
+    //dd($id);
         $user = User::findOrFail($id);
 
    
@@ -299,52 +351,99 @@ $request->session()->flash('error','Please choose a subject for the student to t
         $user->updated = 'No';
         $user->save();
 
-         $userrole = DB::table('role_user')->where('user_id', $id)->first();
+     /*   $appeal = DB::table('appeals')->where('user_id',$id)->first();
 
-        $role = $userrole->role_id;
+        if(isset($appeal)){
+
+                DB::table('appeals')->where('user_id',$id)->update([
+                    'status' => 'Accepted'
+                ]);
+        }*/
+
 
 
             $error = array();
 
             if (isset($request['reason1'])) {
 
-               $reason1= $request->input('reason1');
+                $reason1_status = 'True';
+               $reason1 = $request->input('reason1');
               $error = array_add($error, 'reason1', $reason1);
+
                }
+            else{
 
+                $reason1_status = 'False';
+
+            }
+//dd($reason1_status);
            if (isset($request['reason2'])) {
-
+                
+              $reason2_status = 'True';
                $reason2= $request->input('reason2');
               $error = array_add($error, 'reason2', $reason2);    
                }
+            else{
+
+                $reason2_status = 'False';
+
+            }
 
              if (isset($request['reason3'])) {
 
+                $reason3_status = 'True';
                $reason3= $request->input('reason3');
               $error = array_add($error, 'reason3', $reason3);
                }
 
+            else{
+
+                $reason3_status = 'False';
+
+               }
+
            if (isset($request['reason4'])) {
 
+               $reason4_status = 'True';
                $reason4= $request->input('reason4');
               $error = array_add($error, 'reason4', $reason4);    
                }
-                if (isset($request['reason5'])) {
+               else{
+                
+            $reason4_status = 'False';
 
+               }
+                if (isset($request['reason5'])) {
+             
+             $reason5_status = 'True';
                $reason5= $request->input('reason5');
               $error = array_add($error, 'reason5', $reason5);
                }
+            else{
 
+            $reason5_status = 'False';
+
+                }
            if (isset($request['reason6'])) {
 
+             $reason6_status = 'True';
                $reason6= $request->input('reason6');
               $error = array_add($error, 'reason6', $reason6);    
                }
 
+            else{
+
+               $reason6_status = 'False';
+
+                }
                 if (isset($request['reason7'])) {
 
+                $reason7_status = 'True';
                $reason7= $request->input('reason7');
               $error = array_add($error, 'reason7', $reason7);    
+               }
+               else{
+                 $reason7_status = 'False';
                }
 
                $specification= $request->input('specification');
@@ -364,24 +463,48 @@ $request->session()->flash('error','Please choose a subject for the student to t
 
         }
 
+if(($user->gradeleveltoenrolin == 'Grade 11') ||($user->gradeleveltoenrolin == 'Grade 12')){
 
-        if($role = 4){
+  $section =  DB::table('sections')->where('grade',$user->gradeleveltoenrolin)->where('strand',$user->strandtoenrolin)->where('lower_gwa','<=',$user->generalaverage)->where('upper_gwa','>=',$user->generalaverage)->first();
 
-        $user->roles()->detach(4); 
-        $user->roles()->attach(3);
-        }
+}
+else{
 
-        if($role = 2){
+   $section =  DB::table('sections')->where('grade',$user->gradeleveltoenrolin)->where('lower_gwa','<=',$user->generalaverage)->where('upper_gwa','>=',$user->generalaverage)->first();
 
-        $user->roles()->detach(2); 
-        $user->roles()->attach(3);
-        }
+}
+
+$role = DB::table('role_user')->where('user_id',$id)->first();
+
+if($role->role_id == 2){
+
+    if(isset($section)){
 
 
+$admission_count = $section->admission_count - 1;
 
+if($admission_count >= $section->admission_limit)
+{
+    $admission_status = 'No';
+}
+else{
 
+ $admission_status = 'Yes';
 
+}
 
+DB::table('sections')->where('id',$section->id)->update([
+
+'admission_count' => $admission_count,
+'admission_status' => $admission_status,
+
+]);
+
+ }
+
+}
+
+        $user->roles()->sync(5); 
 
        
       $url = URL::signedRoute('user.profile' , ['id'=> $id]);  
@@ -401,7 +524,7 @@ $request->session()->flash('error','Please choose a subject for the student to t
       if(!isset($request['attach'])){
 
 
-          $url =  URL::signedRoute('user.appeals' , ['id'=> $id]);
+          $url =  URL::signedRoute('user.appeals', ['id'=> $id]);
 
          $updatedata =[
 
@@ -423,7 +546,20 @@ $request->session()->flash('error','Please choose a subject for the student to t
         Notification::send($user, new UpdateForm($updatedata));
 
 
-       
+              DB::table('rejection_messages')->insert([
+
+             'user_id' => $id,
+             'reason_1' => $reason1_status,
+             'reason_2' => $reason2_status,
+             'reason_3' => $reason3_status,
+             'reason_4' => $reason4_status,
+             'reason_5' => $reason5_status,
+             'reason_6' => $reason6_status,
+             'reason_7' => $reason7_status,
+             'specification' => $specification,
+             'created_at' => Carbon::now()
+      
+             ]);
 
         $request->session()->flash('success',"A request to update the student's enrolment form has been sent");
         return redirect(route('admin.users.index'));

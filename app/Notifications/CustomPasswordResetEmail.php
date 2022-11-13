@@ -76,7 +76,7 @@ class CustomPasswordResetEmail extends Notification
     {
         return (new MailMessage)
             ->subject(Lang::get('Reset Password Notification'))
-            ->line(Lang::get('You are receiving this email because we received a password reset request for your account or your account application has been accepted/created by the admin and is up for activation.'))
+            ->line(Lang::get('You are receiving this email because we received a password reset request for your account'))
             ->action(Lang::get('Reset Password'), $url)
             ->line(Lang::get('This password reset link will expire in 3 days'))
             ->line(Lang::get('If you did not request a password reset, no further action is required.'));

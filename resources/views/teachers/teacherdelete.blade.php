@@ -58,7 +58,7 @@
     </div>
 
     <div class="enrollment-form-field" style="display: flex; flex-direction: flex-end; justify-content: flex-end; align-items: center;">
-      <button type="submit" class="btn btn-md btn-danger" >Delete</button>
+      <button type="submit" class="btn btn-md btn-danger" >Submit</button>
         <a class="btn btn-md btn-warning" href="{{ URL::previous() }}" role="button">Cancel</a>
     </div>
 
@@ -88,12 +88,7 @@
 
 
   </span>
-    <span id="enrollment-applications-container-base-header">Warning: 
-    <small id="enrolemt-application-updated-at">
-     Removing the teacher's data from the database may cause discreapancies to the subjects and sections below
-    </small>
 
-  </span>
     <div class="container-fluid p-0 m-0">
       
 

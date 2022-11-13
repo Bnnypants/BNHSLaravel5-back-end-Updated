@@ -31,7 +31,7 @@ class SubjectController extends Controller
           }
           if(Gate::allows('is-admin')){
 
-$availableteachers = Teachers::all();
+$availableteachers = Teachers::where('status','Active')->get();
 
 
     return view('subjects.index',['availableteachers' => $availableteachers],['subjects'=> Subjects::paginate(10)]);
@@ -61,7 +61,7 @@ $availableteachers = Teachers::all();
      */
     public function store(Request $request)
     {
-      
+     // dd($request->all());
          $subject = Subjects::create($request->only([
             'name'
 
@@ -76,6 +76,12 @@ $availableteachers = Teachers::all();
         }
         $subject->grades()->attach($request['gradelevel']);
         } 
+        else{
+
+        $request->session()->flash('error','Please pick a gradelevel');
+        return redirect(route('faculty.subjects.index'));
+
+        }
 
         
         if ((in_array(5,$request['gradelevel'])) || (in_array(6,$request['gradelevel']))  ) {

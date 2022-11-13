@@ -26,7 +26,7 @@ class AdminAppeals extends Controller
           }
           if(Gate::allows('is-admin')){
 
-    return view('admin.users.appeals',['appeals'=> DB::table('appeals')->paginate(10)]);
+    return view('admin.users.appeals',['appeals'=> DB::table('appeals')->where('status', 'Pending')->paginate(10)]);
 
           }
 
@@ -62,9 +62,11 @@ class AdminAppeals extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show()
     {
-        //
+
+    
+
     }
 
     /**
@@ -90,9 +92,9 @@ class AdminAppeals extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update()
     {
-        //
+           
     }
 
     /**
@@ -104,9 +106,19 @@ class AdminAppeals extends Controller
     public function destroy(Request $request,$id)
     {
 
-   DB::table('appeals')->where('id', $request['id'])->delete();
+   DB::table('appeals')->where('id', $request['id'])->update(
+    [
+        'status' => 'Rejected'
+    ]);
+
 
     $user = User::findOrFail($id);
+
+       DB::table('role_user')->where('user_id', $user->id)->update(
+    [
+        'role_id' => '7'
+    ]);
+
 
           $url =  URL('index');
 

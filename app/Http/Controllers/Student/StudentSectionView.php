@@ -21,9 +21,14 @@ class StudentSectionView extends Controller
 
     $section = DB::table('sections')->where('id',$user->section)->first();
 
-    $adviser = DB::table('teachers')->where('advisory',$section->id)->first();
+if (isset($section)) {
+
+      $adviser = DB::table('teachers')->where('advisory',$section->id)->first();
 
     $subjects = DB::table('subjects_teachers_schedule')->where('section_id',$section->id)->get();
+}
+
+    
 
     if($user->accepted_as == 'Conditionally Promoted')
 
@@ -32,7 +37,9 @@ class StudentSectionView extends Controller
 
  $data = DB::table('conditionally_promoted_subjects')->where('user_id',$user->id)->first();
 
-$back = DB::table('subjects_teachers_schedule')->where('id',$data->subjects_teachers_schedule_id)->first();
+if(isset($data)){
+
+   $back = DB::table('subjects_teachers_schedule')->where('id',$data->subjects_teachers_schedule_id)->first();
 
 $back_section = DB::table('sections')->where('id',$back->section_id)->first();
 
@@ -41,10 +48,37 @@ $back_section = DB::table('sections')->where('id',$back->section_id)->first();
     'back_section' => $back_section
 
   ]);
+   if (isset($section)) {
+      return view('student.studentsection',[ 'adviser' => $adviser,'student' => $user, 'section' => $section , 'subjects' => $subjects,
+    'back_subject_datas' => $back_subject_data,
+    'back_section' => $back_section
+
+  ]);
+}
+else {
+      return view('student.studentsection',[ 'student' => $user, 'subjects' => $subjects,
+    'back_subject_datas' => $back_subject_data,
+    'back_section' => $back_section
+
+  ]);
+}
+
+}
+
+
+
+
 
        } 
 
+if (isset($section)) {
       return view('student.studentsection',[ 'adviser' => $adviser,'student' => $user, 'section' => $section , 'subjects' => $subjects]);
 
        }
+
+else {
+      return view('student.studentsection',[ 'student' => $user ]);
+
+       }
+}
 }

@@ -20,7 +20,7 @@ class AppealView extends Controller
     public function __invoke(Request $request)
     {
 
-    //dd($request->all());
+    // /dd($request->all());
 
     $user = User::find($request->id);
 
@@ -31,12 +31,25 @@ class AppealView extends Controller
       return redirect(URL('index'));
     }
 
-   if(DB::table('appeals')->where('user_id',$request->id)->exists()){
+    $appeal = DB::table('appeals')->where('user_id',$user->id)->first();
 
-    $request->session()->flash('error','You have already submitted an appeal.Please wait for your appeal to be evaluated');
-    return redirect(URL('index'));
+        if(isset($appeal)){
 
-   } 
+               if($appeal->status == 'Pending'){
+
+                  $request->session()->flash('error','Your appeal has not been evaluated yet.');
+                  return redirect(URL('index'));
+
+               }
+
+               if($appeal->status == 'Rejected'){
+
+                  $request->session()->flash('error','Your appeal has been rejected');
+                  return redirect(URL('index'));
+
+               }
+        }
+
   
   
       return view('user.appeals', ['user' => $user]);

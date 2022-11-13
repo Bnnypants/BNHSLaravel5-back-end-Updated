@@ -12,7 +12,7 @@
         <a href={{route('faculty.sections.index') }} id="refresh"><i class="fi fi-rr-refresh"></i> Refresh Data</a>
 
       </div>
-
+<div class="card">
    <div class="container-fluid p-0 m-0" id="AddOn">
       <a class="btn btn-md btn-success"    onclick="show2();">Create new section</a>
   </div> 
@@ -32,7 +32,7 @@
         <div class="enrollment-form-field" style="grid-template-columns: 1fr 1fr 1fr 1fr; padding-left: 1.4rem;" >
           <div class="form-field" style="margin-right: 3rem;">
             <div class="form-check">
-              <input class="form-check-input" type="radio" value="1" name="gradelevel" id="modality" onclick="Strands2()">
+              <input class="form-check-input" type="radio" value="1" name="gradelevel" id="modality" onclick="Strands2()" checked>
               <label class="form-check-label" for="flexRadioDefault1">
                 Grade 7
               </label>
@@ -128,7 +128,7 @@
             <div class="form-check">
               <input class="form-check-input" type="radio" value="6" name="strand" id="modality">
               <label class="form-check-label" for="flexRadioDefault1">
-                ABMS 
+                ABM 
               </label>
             </div>
           </div>
@@ -147,21 +147,25 @@
     </div>
   </div>
   </div>
+
    <div class="enrollment-form-field" style="display: flex; flex-direction: flex-end; justify-content: flex-end; align-items: center;">
       <button type="submit" class="btn btn-md btn-success" >Submit</button>
         <a class="btn btn-md btn-warning"  onclick="hide2();">Cancel</a>
     </div>
-     </form>        
+     </form>   
+      </div>     
 </div>
-
+</div>
       <table class="table table-hover" id="table">
         <thead>
           <tr>
             <th scope="col">Grade</th>
             <th scope="col">Strand</th>
             <th scope="col">Section Number</th>
+        
             <th scope="col">Grade Criteria</th>
             <th scope="col">Adviser</th>
+                <th scope="col">Admission Limit</th>
            <th scope="col">Number of Students</th>
          
             <th scope="col">Action</th>
@@ -179,8 +183,10 @@ $adviser =  DB::table('teachers')->where('advisory', $section->id)->first();
             <td>{{$section ->grade}}</td>
             <td>{{$section ->strand}}</td>
             <td scope="row">{{$section->section_number}}</td>
+           
             <td>{{$section ->upper_gwa}} - {{$section ->lower_gwa}}</th>
         <td>@isset($adviser){{$adviser ->firstname}} {{$adviser ->middlename}} {{$adviser ->lastname}}@endisset</td>
+         <td scope="row">{{$section->admission_limit}}</td>
             <td>{{$students}}</th>
           
          

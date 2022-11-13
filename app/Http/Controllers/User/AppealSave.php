@@ -20,7 +20,8 @@ class AppealSave extends Controller
 
             DB::table('appeals')->insert([
             'user_id' =>  $request['id'],
-             'message' =>  $request['specification']
+             'message' =>  $request['specification'],
+            'status' =>  'Pending'
              ]);
 
    $request->session()->flash('success','You have successfully submitted an appeal. Please wait for its evaluation');

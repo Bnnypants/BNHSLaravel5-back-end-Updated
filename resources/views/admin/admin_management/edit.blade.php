@@ -43,7 +43,7 @@
 <div class="enrollment-form-field" style="grid-template-columns: 1fr;">
   <div class="form-field">
     <label for="email">Email address</label>
-    <input name="email" type="email" class="@error('email') is-invalid |@enderror" id="email" aria-describedby="email" value="{{old('email')}} @isset($user){{$user->email}} @endisset">
+    <input name="email" type="email" class="@error('email') is-invalid |@enderror" id="email" aria-describedby="email" value="{{old('email')}} @isset($user){{$user->email}} @endisset" readonly>
     @error('email')
     <span class="invalid feedback" role="alert">
       {{$message}}

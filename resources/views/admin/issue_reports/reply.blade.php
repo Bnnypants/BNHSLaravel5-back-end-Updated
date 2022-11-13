@@ -2,7 +2,7 @@
 @section('content')
 
 <div id="form-container-base">
-  <form method="POST" action="{{route('admin.issue_reports.update',$message->issue_reports_id) }}">
+  <form method="POST" action="{{route('admin.issue_reports.update',$message->id) }}">
      
     @method('PUT')
    @csrf

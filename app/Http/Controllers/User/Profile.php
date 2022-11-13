@@ -26,10 +26,11 @@ class Profile extends Controller
 
 
 
-
     $check =  $user->updated;
 
     if($request['enrollee'] == 'true'){
+
+
      
     if($user->gradeleveltoenrolin == 'Grade 7'){
 
@@ -64,6 +65,13 @@ class Profile extends Controller
     
     } 
 
+
+    if($user->gradeleveltoenrolin == 'Grade 12'){
+
+    $gradeleveltoenrolin = 'Graduate';
+    
+    } 
+
     if($role->role_id == '4'){
 
     $request->session()->flash('success','You have successfully submitted your application form');
@@ -71,6 +79,10 @@ class Profile extends Controller
     return redirect(url('index'));
 
     }
+    
+
+    $user->studenttype = 'Old Student';
+
     return view('user.profile',['user' => $user ,'gradeleveltoenrolin' => $gradeleveltoenrolin]);
 
     }
@@ -81,6 +93,7 @@ class Profile extends Controller
     return view('user.profile',['user' => $user]);
 
     }
+//    dd($check);
 
 
     $request->session()->flash('success','You have updated your application form');

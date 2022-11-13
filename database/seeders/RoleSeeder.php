@@ -46,9 +46,16 @@ class RoleSeeder extends Seeder
 
         ]);
 
-           DB::table('roles')->insert([
+      DB::table('roles')->insert([
             
             'name' => 'Disabled'
+
+        ]);
+
+
+           DB::table('roles')->insert([
+            
+            'name' => 'Blocked'
 
         ]);
     

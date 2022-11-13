@@ -25,7 +25,15 @@
       <input name="phonenumber" type="text" class="form-control @error('phonenumber') is-invalid |@enderror" id="phonenumber" aria-describedby="phonenumber" value="{{old('phonenumber')}} @isset($user){{$user->phonenumber}} @endisset" readonly>
     </div>
   </div>
-  <div class="enrollment-form-field" style="grid-template-columns: 1fr 1fr;">
+  <div class="enrollment-form-field" style="grid-template-columns:  1fr 1fr 1fr 1fr;">
+          <div class="form-field">
+      <label for="gradeleveltoenrolin" class="form-label">Student Type</label>
+      <input name="gradeleveltoenrolin" type="text" class="form-control @error('gradeleveltoenrolin') is-invalid |@enderror" id="gradeleveltoenrolin" aria-describedby="gradeleveltoenrolin" value="{{old('gradeleveltoenrolin')}} @isset($user){{$user->studenttype}} @endisset" readonly>
+    </div>
+      <div class="form-field">
+      <label for="gradeleveltoenrolin" class="form-label">Last Grade Level Completed</label>
+      <input name="gradeleveltoenrolin" type="text" class="form-control @error('gradeleveltoenrolin') is-invalid |@enderror" id="gradeleveltoenrolin" aria-describedby="gradeleveltoenrolin" value="{{old('gradeleveltoenrolin')}} @isset($user){{$user->lastgradelevelcompleted}} @endisset" readonly>
+    </div>
     <div class="form-field">
       <label for="gradeleveltoenrolin" class="form-label">Grade Level Requested</label>
       <input name="gradeleveltoenrolin" type="text" class="form-control @error('gradeleveltoenrolin') is-invalid |@enderror" id="gradeleveltoenrolin" aria-describedby="gradeleveltoenrolin" value="{{old('gradeleveltoenrolin')}} @isset($user){{$user->gradeleveltoenrolin}} @endisset" readonly>

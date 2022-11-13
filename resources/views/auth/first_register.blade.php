@@ -10,7 +10,7 @@
     </center>
 
 <div id="form-container-base">
-  <span id="form-header">@if($status == 'true') BNHS is accepting enrolment applications @endif @if($status == 'false') BNHS not is accepting enrolment applications @endif</span>
+  <span id="form-header">@if($status == 'true') BNHS is accepting enrollment applications @endif @if($status == 'false') BNHS is not accepting enrollment applications @endif</span>
    <small id="enrolemt-application-updated-at"> Enrolment starts/started at {{$schoolyear->enrolment_start}}</small>
    <small id="enrolemt-application-updated-at"> Enrolment ends at {{$schoolyear->enrolment_start}}</small>
   <br>

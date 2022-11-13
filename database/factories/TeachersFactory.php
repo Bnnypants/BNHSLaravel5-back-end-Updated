@@ -18,6 +18,13 @@ class TeachersFactory extends Factory
             'middlename'=> $this->faker->lastName(),
             'lastname'=> $this->faker->lastName(),
             'email' => $this->faker->unique()->safeEmail(),
+
+            'status'=>$this->faker->randomElement([
+
+            'Active',
+            'Inactive'
+
+            ]),
             'phonenumber'=>$this->faker->numberBetween(63556841720,63556841700)
         ];
     }

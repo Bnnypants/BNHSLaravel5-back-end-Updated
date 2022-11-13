@@ -21,7 +21,7 @@ class Accepted extends Controller
 
     return view('admin.users.accepted',['users'=> 
       User::whereHas('roles', function($query) {
-      $query->whereNotNull('email_verified_at')->where('name', 'accepted');
+      $query->whereNotNull('email_verified_at')->where('name', 'Accepted');
 
       })->orderBy('id')->paginate(10)]);
 

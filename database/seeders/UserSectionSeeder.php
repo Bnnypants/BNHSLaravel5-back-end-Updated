@@ -17,13 +17,24 @@ class UserSectionSeeder extends Seeder
     {
           $sections = Sections::all();
 
-        User::all()->each(function($user) use ($sections){
-            $user->sections()->attach(
+          
+        foreach($sections as $section){
 
-                $sections->random(1)->pluck('id')
+                
+              $id = $section->id;
 
-            );
+              $users = User::whereHas('roles', function($query) use ($id) {
 
-        });
+              $query->where('section',$id)->where('name', 'Accepted');
+
+              })->count();
+
+              
+           $section = Sections::find($id);
+           $section->admission_count = $users;
+           $section->save();
+
+
+        }
     }
 }

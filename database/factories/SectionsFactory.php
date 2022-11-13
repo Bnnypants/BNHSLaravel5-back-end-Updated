@@ -45,6 +45,18 @@ class SectionsFactory extends Factory
            '85'
 
             ]),
+
+            'admission_limit'=>$this->faker->randomElement([
+
+           '30'
+
+            ]),
+
+           'admission_status'=>$this->faker->randomElement([
+
+           'Yes'
+
+            ]),
        
         ];
     }

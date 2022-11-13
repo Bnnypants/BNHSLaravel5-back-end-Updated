@@ -11,9 +11,9 @@
         <input type="search" placeholder="Search Queries" class="form-control search-input" data-table="table" />
         <a href={{route('faculty.teachers.index') }} id="refresh"><i class="fi fi-rr-refresh"></i> Refresh Data</a>
     </div>
-
+<div class="card">
    <div class="container-fluid p-0 m-0" id="AddOn">
-      <a class="btn btn-md btn-success"  onclick="show2();">Add</a>
+      <a class="btn btn-md btn-success"  onclick="show2();">Add New Subject</a>
   </div> 
 
 
@@ -232,7 +232,7 @@ $names = DB::table('subjects')->where('id', $load->subjects_id)->get();
 
   </form>
     </div>
-
+    </div>
 
       <table class="table table-hover" id="table">
         <thead>

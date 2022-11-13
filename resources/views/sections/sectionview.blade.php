@@ -11,7 +11,7 @@ $adviser =  DB::table('teachers')->where('advisory', $section->id)->first();
 <div id="enrollment-applications-container-base">
   <div id="enrollment-table-container">
 
-    <span id="enrollment-applications-container-base-header">{{$section->grade}} - {{$section->strand}} - {{$section->section_number}} 
+    <span id="enrollment-applications-container-base-header">{{$title = $section->grade.' '.$section->strand.' - '.$section->section_number}} 
 
       <small id="enrolemt-application-updated-at">Adviser - @isset($adviser){{$adviser->firstname}} {{$adviser->middlename}} {{$adviser->lastname}} @endisset</small>
 
@@ -22,10 +22,26 @@ $adviser =  DB::table('teachers')->where('advisory', $section->id)->first();
     </span>
 
 
-    <div class="container-fluid p-0 m-0">
 
 
-
+      <div id="search-table" class="form-field">
+        <input type="search" placeholder="Search Queries" class="form-control search-input" data-table="table" />
+           <div>
+                  <form method="POST" action=" {{url('admin/print_list') }}">
+                         @csrf
+                    <input type="hidden" name="title" value="{{$title}}">
+                         @foreach($students as $student)
+        <input type="hidden" name="users[]" value="{{$student->id}}">
+        @endforeach
+              <button class="btn btn-md btn-success"  type="submit" role="button">Print List</button>
+       </form>
+       <br>
+         
+        
+     
+      
+        </div>
+      </div>
 
 
       <table class="table table-hover" id="table">
@@ -85,12 +101,7 @@ $adviser =  DB::table('teachers')->where('advisory', $section->id)->first();
 
   
     </div>
-      <div class="enrollment-form-field">
-            <a class="btn btn-md btn-warning" href="{{route('faculty.sections.edit',$section->id) }}" role="button">Edit</a>
-
-      <a class="btn btn-md btn-danger" href="" role="button">Delete</a>
-      <a style="font-size: 14px;" class="btn btn-warning" href="{{ URL::previous() }}" role="button">Back</a>
-    </div>
+ 
   </div>
 
 </div>

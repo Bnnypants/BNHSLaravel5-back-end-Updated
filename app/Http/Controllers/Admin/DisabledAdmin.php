@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
+
 class DisabledAdmin extends Controller
 {
     /**
@@ -25,9 +27,9 @@ class DisabledAdmin extends Controller
 
     return view('admin.admin_management.disabled',['users'=> 
       User::whereHas('roles', function($query) {
-      $query->where('name', 'disabled');
+      $query->where('name', 'Disabled')->where('user_id', '!=' , Auth::id());
 
-      })->orderBy('id')->paginate(10)]);
+      })->orderBy('id')->paginate(10),'current_user' => DB::table('users')->where('id', Auth::id())->first()]);
 
           }
 

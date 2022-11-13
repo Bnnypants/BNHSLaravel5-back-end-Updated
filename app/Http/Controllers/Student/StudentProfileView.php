@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class StudentProfileView extends Controller
 {
@@ -21,6 +22,6 @@ class StudentProfileView extends Controller
      $id = Auth::id(); 
     $user = User::find($id);
 
-    return view('student.studentprofile',['user' => $user]);
+    return view('student.studentprofile',['user' => $user, 'modalities' =>DB::table('modality_user')->where('user_id',$id)->get()]);
     }
 }
