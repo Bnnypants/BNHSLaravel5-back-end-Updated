@@ -130,7 +130,7 @@ else{
 
 @if($depracted == True)
 
-Warning: Student's section has been depracted post enrolment
+Warning: Student's section has been deleted post enrolment
 
 @php
 $show = False;
