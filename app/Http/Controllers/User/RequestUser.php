@@ -36,7 +36,7 @@ class RequestUser extends Controller
 
 
 
-    if($role == '1' || $role == '2' ){
+    if($role == '1' || $role == '2' || $role == '3' ){
 
          Password::sendResetLink($request->only(['email']));
 
