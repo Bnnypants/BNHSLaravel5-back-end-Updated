@@ -98,11 +98,10 @@ class IssueReports extends Controller
         
 
              ]);
+  $request->session()->flash('error','Issue marked as unsolved');
 
-
-   $request->session()->flash('success','Issue marked as solved');
-
-      return redirect(route('admin.issue_reports.create'));
+      return redirect(route('admin.issue_reports.index'));
+ 
 
       
         }
@@ -114,10 +113,11 @@ class IssueReports extends Controller
     
 
              ]);
-  $request->session()->flash('error','Issue marked as unsolved');
+              
+   $request->session()->flash('success','Issue marked as solved');
 
-      return redirect(route('admin.issue_reports.index'));
- 
+      return redirect(route('admin.issue_reports.create'));
+
             
         }
           
