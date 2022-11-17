@@ -72,13 +72,9 @@ DB::table('schoolyear')
                     'status' => 'inactive'
                  ]);
 
-DB::table('users')
-            ->whereNull('section')->orWhere('gradeleveltoenrolin' ,'Grade 12')->delete();
-
-
 
 DB::table('role_user')
-                ->where('role_id', '3')->orWhere('role_id','4')->orWhere('role_id','5')
+                ->where('role_id', '3')->where('role_id','4')->where('role_id','5')->where('role_id','7')
                 ->delete();
 
  DB::table('role_user')
@@ -113,6 +109,7 @@ foreach($modalities as $modality) {
            'user_id' => $user->id,
            'name' => $user->name,
            'email' => $user->email,
+           'email_verified_at' => $user->email_verified_at,
             'middlename' => $user->middlename,
             'lastname' => $user->lastname,
             'extensionname' => $user->extensionname,

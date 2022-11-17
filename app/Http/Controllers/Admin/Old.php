@@ -20,6 +20,7 @@ class Old extends Controller
     {
       // dd('banana');
         $user = DB::table('user_schoolyear')->where('id',$request->id)->first();
+
         $modality =  DB::table('user_schoolyear_modality')->where('user_id',$request->id)->get();
 //dd( $modality );
 
@@ -75,6 +76,7 @@ class Old extends Controller
           'lastschoolattended'=> $user->lastschoolattended,
           'schoolid'=> $user->schoolid,
           'birthplace'=> $user->birthplace,
+          'date'=> date('Y-m-d', strtotime($user->email_verified_at)),
           'modalities'=> $modality
         ];
           
