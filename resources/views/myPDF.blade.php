@@ -207,7 +207,7 @@ Modality Chosen :
              Middle Name : {{$mothermiddlename}} <br>
              Last Name : {{$motherlastname}} <br>
               Phone Number : {{$motherphonenumber}} <br></td>
-            <td> Balik / Aral or Transferee Data</td>
+            <td> Balik / Aral or Transferee/Moving In Data</td>
             @if($studenttype != "Old Student")
             <td>Last Grade Level Completed : {{$lastgradelevelcompleted}} <br>
              Last School Year Completed : {{$lastschoolyearattended}} <br>

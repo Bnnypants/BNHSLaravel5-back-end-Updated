@@ -16,16 +16,19 @@
      
 <div class="enrollment-form-field">
         @foreach($records as $record)
+
          <div class="form-field">
         <label for="documents">Past Records Found :</label>
         <div style="width: 100%;" class="file-upload" id="file-upload">
                    <div class="form-field">
           <br>
+
            <a class="btn btn-outline-secondary" href="{{url('admin/records',$record->id) }}" role="button">S.Y. {{$record->schoolyear_start}} - {{$record->schoolyear_end}}</a>
         </div>
       
         </div>
       </div>
+  
     @endforeach
     </div>
 <div class="enrollment-form-field">
@@ -799,7 +802,7 @@
           @enderror
         </div>
         <div class="form-field">
-          <label for="schoolid">School ID</label>
+          <label for="schoolid">School ID </label>
           <input placeholder="School ID" type="text" name="schoolid" id="schoolid" class="@error('schoolid') is-invalid | @enderror" id="schoolid" aria-describedby="schoolid" value="{{$user->schoolid}}">
           @error('schoolid')
           <span class="invalid-feedback" role="alert">
@@ -825,13 +828,18 @@ else{
 
 $section =  DB::table('sections')->where('grade',$user->gradeleveltoenrolin)->where('lower_gwa','<=',$user->generalaverage)->where('upper_gwa','>=',$user->generalaverage)->where('admission_status','Yes')->first();
 }
+$data = DB::table('users')->where('lrnnumber', $user->lrnnumber)->first();
+$role = DB::table('role_user')->where('user_id', $data->id)->first();
 
 @endphp
+
     <div class="enrollment-form-field">
+      @if($role->role_id != 3  && $role->role_id != 7)
       @isset($section)
       <a style="font-size: 14px;" class="btn btn-success" href="{{route('admin.users.edit',$user->id) }}" role="button">Accept</a>
       @endisset
       <a style="font-size: 14px;" class="btn btn-danger" href="{{url('admin/reason',$user->id) }}" role="button">Reject</a>
+      @endif
       <a style="font-size: 14px;" class="btn btn-warning" href="{{ URL::previous() }}" role="button">Back</a>
     </div>
   </div>

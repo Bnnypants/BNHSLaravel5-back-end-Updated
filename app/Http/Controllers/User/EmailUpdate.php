@@ -96,7 +96,13 @@ class EmailUpdate extends Controller
 
    }
       }
-  
+     else{
+
+   $request->session()->flash('error','You do not have permission to update your email');
+
+   return redirect(route('user.email_update.create'));
+
+   }
 
     }
 

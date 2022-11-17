@@ -626,7 +626,7 @@
       </div>
       <div class="form-field">
         <label for="fatherphonenumber">Father's Contact Number</label>
-        <input placeholder="###########" name="fatherphonenumber" type="number" class="@error('fatherphonenumber') is-invalid |@enderror" id="fatherphonenumber" aria-describedby="fatherphonenumber" value="{{$user->fatherphonenumber}}" required required maxlength="11" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);">
+        <input placeholder="###########" name="fatherphonenumber" type="number" class="@error('fatherphonenumber') is-invalid |@enderror" id="fatherphonenumber" aria-describedby="fatherphonenumber" value="{{$user->fatherphonenumber}}" maxlength="11" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);">
         @error('fatherphonenumber')
         <span class="invalid-feedback" role="alert">
           {{$message}}
@@ -664,7 +664,7 @@
       </div>
       <div class="form-field">
         <label for="motherphonenumber">Mother's Contact Number</label>
-        <input placeholder="###########" name="motherphonenumber" type="number" class="@error('motherphonenumber') is-invalid |@enderror" id="motherphonenumber" aria-describedby="motherphonenumber" value="{{$user->motherphonenumber}}" required required maxlength="11" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);">
+        <input placeholder="###########" name="motherphonenumber" type="number" class="@error('motherphonenumber') is-invalid |@enderror" id="motherphonenumber" aria-describedby="motherphonenumber" value="{{$user->motherphonenumber}}" maxlength="11" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);">
         @error('motherphonenumber')
         <span class="invalid-feedback" role="alert">
           {{$message}}
@@ -713,7 +713,7 @@
     </div> 
     <hr>
     <div class="form-info-header">
-      <span>Preferred Distance Learning Modalyties</span>
+      <span>Preferred Distance Learning Modalities</span>
     </div>
     <div class="enrollment-form-field" style="grid-template-columns:  3fr;">
          @error('modality')

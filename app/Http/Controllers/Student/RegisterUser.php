@@ -57,8 +57,8 @@ class RegisterUser extends Controller
             'schoolid' => 'sometimes|nullable|required_if:studenttype,Transferee,Balik Aral/Returning Student|digits:6',
 
 
-            'fatherphonenumber' => 'required|digits:11|starts_with:63',
-            'motherphonenumber' => 'required|digits:11|starts_with:63',
+            'fatherphonenumber' => 'sometimes|nullable|digits:11|starts_with:63',
+            'motherphonenumber' => 'sometimes|nullable|digits:11|starts_with:63',
             'guardianphonenumber' => 'required|digits:11|starts_with:63',
 
             'fatherfirstname' => 'required|max:255|alpha_spaces',

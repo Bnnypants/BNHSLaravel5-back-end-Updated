@@ -20,6 +20,7 @@ use Illuminate\Support\Collection;
 use App\Notifications\EmailVerification;
 use Illuminate\Support\Facades\Hash;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 
 
 class UserController extends Controller
@@ -97,7 +98,7 @@ class UserController extends Controller
 
         $request->session()->flash('success','Succesfully created an admin account');
 
-        return redirect(route('admin.management.index'));
+       return redirect(route('admin.management.index'));
     }
 
     /**
@@ -301,6 +302,13 @@ DB::table('sections')->where('id',$section->id)->update([
 'admission_status' => $admission_status,
 
 ]);
+
+DB::table('users')->where('id',$user->id)->update([
+
+            'last_reviewed_by' => Auth::id()
+
+        ]);
+
  
         if(!$user){
 
@@ -503,6 +511,12 @@ DB::table('sections')->where('id',$section->id)->update([
  }
 
 }
+
+DB::table('users')->where('id',$user->id)->update([
+
+            'last_reviewed_by' => Auth::id()
+
+        ]);
 
         $user->roles()->sync(5); 
 

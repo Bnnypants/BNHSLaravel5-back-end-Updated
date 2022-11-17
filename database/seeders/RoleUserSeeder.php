@@ -28,7 +28,8 @@ class RoleUserSeeder extends Seeder
 
         DB::table('users')->where('id',$pending->id)->update([
 
-            'updated' => Null
+            'updated' => Null,
+            'last_reviewed_by' => Null
 
         ]);
 

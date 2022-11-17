@@ -364,7 +364,12 @@ if(isset($request['starts_at_friday'][$index])){
      */
     public function update(Request $request, $id)
     {
-       // /dd($request->all());
+        if($request['lower_gwa'] > $request['upper_gwa']){
+
+  $request->session()->flash('error',"Please set a proper range of GWA");
+       return redirect(route('faculty.sections.index'));
+
+}
               
 if(isset($request['subject_teachers'])){
 

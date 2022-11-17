@@ -55,7 +55,7 @@
       <br>
       <div class="col" style="padding-left: 1.5rem;">
         <div class="form-check">
-          <input class="form-check-input" type="checkbox" value=" The enrolment form is full of discrepancies" name="reason1" @if($message->reason_1 == True)
+          <input class="form-check-input" type="checkbox" value=" The enrolment form is full of discrepancies" name="reason1" @if($message->reason_1 == 'True')
           checked 
           @endif>
           <label class="form-check-label" for="flexCheckIndeterminate">
@@ -65,7 +65,7 @@
         <div class="form-check">
 
           <input class="form-check-input" type="checkbox" value="The submitted documents are incorrect" name="reason2"
-          @if($message->reason_2 == True)
+          @if($message->reason_2 == 'True')
           checked 
           @endif>
           <label class="form-check-label" for="flexCheckIndeterminate">
@@ -76,7 +76,7 @@
         <div class="form-check">
 
           <input class="form-check-input" type="checkbox" value=" Data in the document do not match the data in the enrolment form" name="reason3"
-          @if($message->reason_3 == True)
+          @if($message->reason_3 == 'True')
           checked 
           @endif>
           <label class="form-check-label" for="flexCheckIndeterminate">
@@ -87,7 +87,7 @@
         <div class="form-check">
 
           <input class="form-check-input" type="checkbox" value="The student isn't qualified for the grade he/she applied into" name="reason4"
-          @if($message->reason_4 == True)
+          @if($message->reason_4 == 'True')
           checked 
           @endif>
           <label class="form-check-label" for="flexCheckIndeterminate">
@@ -98,7 +98,7 @@
         <div class="form-check">
 
           <input class="form-check-input" type="checkbox" value="The student isn't qualified for the strand he/she applied into" name="reason5"
-          @if($message->reason_5 == True)
+          @if($message->reason_5 == 'True')
           checked 
           @endif>
           <label class="form-check-label" for="flexCheckIndeterminate">
@@ -109,7 +109,7 @@
         <div class="form-check">
 
           <input class="form-check-input" type="checkbox" value=" The school isn't currently accepting student into the requested strand to enrol into" name="reason6"
-          @if($message->reason_6 == True)
+          @if($message->reason_6 == 'True')
           checked 
           @endif>
           <label class="form-check-label" for="flexCheckIndeterminate">
@@ -120,7 +120,7 @@
         <div class="form-check">
 
           <input class="form-check-input" type="checkbox" value="The school isn't currently accepting student into the requested grade to enrol into" name="reason7"
-          @if($message->reason_7 == True)
+          @if($message->reason_7 == 'True')
           checked 
           @endif>
           <label class="form-check-label" for="flexCheckIndeterminate">

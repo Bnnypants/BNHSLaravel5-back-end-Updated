@@ -46,8 +46,8 @@ $('input[id^="tag"]').on('click', function() {
       </div>
     <div class="form-field">
         <label for="lowergrade_limit">Lower Grade Limit</label>
-        <input placeholder="##" name="lower_gwa" type="number" class="@error('lowergrade_limit') is-invalid |@enderror" id="lowergwa_limit" aria-describedby="lowergwa_limit" value="{{$section->lower_gwa}}" maxlength="2" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength); " min="75" max="99" onchange="
-        if (this.value < 75 || this.value > 99) { 
+        <input placeholder="##" name="lower_gwa" type="number" class="@error('lowergrade_limit') is-invalid |@enderror" id="lowergwa_limit" aria-describedby="lowergwa_limit" value="{{$section->lower_gwa}}" maxlength="3" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength); " min="0" max="100" onchange="
+        if (this.value < 0| | this.value > 100) { 
           this.style.borderColor = 'red'; 
           document.getElementById('ga-alert').style.display = 'block' 
           }
@@ -67,8 +67,8 @@ $('input[id^="tag"]').on('click', function() {
       </div>
          <div class="form-field">
         <label for="uppergwa_limit">Upper Grade Limit</label>
-        <input placeholder="##" name="upper_gwa" type="number" class="@error('uppergrade_limit') is-invalid |@enderror" id="uppergwa_limit" aria-describedby="uppergwa_limit" value="{{$section->upper_gwa}}" maxlength="2" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength); " min="75" max="99" onchange="
-        if (this.value < 75 || this.value > 99) { 
+        <input placeholder="##" name="upper_gwa" type="number" class="@error('uppergrade_limit') is-invalid |@enderror" id="uppergwa_limit" aria-describedby="uppergwa_limit" value="{{$section->upper_gwa}}" maxlength="3" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength); " min="0" max="100" onchange="
+        if (this.value < 0 || this.value > 100) { 
           this.style.borderColor = 'red'; 
           document.getElementById('ga-alert').style.display = 'block' 
           }
