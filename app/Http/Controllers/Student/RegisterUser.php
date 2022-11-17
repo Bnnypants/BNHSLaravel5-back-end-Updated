@@ -48,13 +48,14 @@ class RegisterUser extends Controller
             'psastatus' => 'required|in:YES,NO',
             'psanumber' => 'sometimes|nullable|required_if:psastatus,YES|digits:12',
 
-            'studenttype' => 'required|in:Old Student,Transferee,Balik Aral/Returning Student',
+            'studenttype' => 'required|in:Old Student,Transferee/Moving In,Balik Aral/Returning Student',
 
-            'lastschoolyearattended' => 'sometimes|nullable|required_if:studenttype,Transferee,Balik Aral/Returning Student|digits:4',
+            'lastschoolyearattended' => 'sometimes|nullable|required_if:studenttype,Transferee/Moving In,Balik Aral/Returning Student|digits:4',
 
-            'lastschoolattended' => 'sometimes|nullable|required_if:studenttype,Transferee,Balik Aral/Returning Student|alpha_spaces',
+            'lastschoolattended' => 'sometimes|nullable|required_if:studenttype,Transferee/Moving In,Balik Aral/Returning Student|alpha_spaces',
 
-            'schoolid' => 'sometimes|nullable|required_if:studenttype,Transferee,Balik Aral/Returning Student|digits:6',
+            'schoolid' => 'sometimes|nullable|required_if:studenttype,Transferee/Moving In,Balik Aral/Returning Student|digits:6',
+
 
 
             'fatherphonenumber' => 'sometimes|nullable|digits:11|starts_with:63',
