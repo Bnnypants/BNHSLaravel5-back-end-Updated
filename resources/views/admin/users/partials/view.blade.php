@@ -821,13 +821,7 @@
 <br>
 @php
 
-if(($user->gradeleveltoenrolin == 'Grade 11') ||($user->gradeleveltoenrolin == 'Grade 12')){
-  $section =  DB::table('sections')->where('grade',$user->gradeleveltoenrolin)->where('strand',$user->strandtoenrolin)->where('lower_gwa','<=',$user->generalaverage)->where('upper_gwa','>=',$user->generalaverage)->where('admission_status','Yes')->first();
-}
-else{
 
-$section =  DB::table('sections')->where('grade',$user->gradeleveltoenrolin)->where('lower_gwa','<=',$user->generalaverage)->where('upper_gwa','>=',$user->generalaverage)->where('admission_status','Yes')->first();
-}
 $data = DB::table('users')->where('lrnnumber', $user->lrnnumber)->first();
 $role = DB::table('role_user')->where('user_id', $data->id)->first();
 
@@ -835,9 +829,9 @@ $role = DB::table('role_user')->where('user_id', $data->id)->first();
 
     <div class="enrollment-form-field">
       @if($role->role_id != 3  && $role->role_id != 7)
-      @isset($section)
+  
       <a style="font-size: 14px;" class="btn btn-success" href="{{route('admin.users.edit',$user->id) }}" role="button">Accept</a>
-      @endisset
+
       <a style="font-size: 14px;" class="btn btn-danger" href="{{url('admin/reason',$user->id) }}" role="button">Reject</a>
       @endif
       <a style="font-size: 14px;" class="btn btn-warning" href="{{ URL::previous() }}" role="button">Back</a>

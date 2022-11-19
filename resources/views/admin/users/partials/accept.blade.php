@@ -25,10 +25,14 @@
       <input name="phonenumber" type="text" class="form-control @error('phonenumber') is-invalid |@enderror" id="phonenumber" aria-describedby="phonenumber" value="{{old('phonenumber')}} @isset($user){{$user->phonenumber}} @endisset" readonly>
     </div>
   </div>
-  <div class="enrollment-form-field" style="grid-template-columns:  1fr 1fr 1fr 1fr;">
+  <div class="enrollment-form-field" style="grid-template-columns:  1fr 1fr 1fr 1fr 1fr;">
           <div class="form-field">
       <label for="gradeleveltoenrolin" class="form-label">Student Type</label>
       <input name="gradeleveltoenrolin" type="text" class="form-control @error('gradeleveltoenrolin') is-invalid |@enderror" id="gradeleveltoenrolin" aria-describedby="gradeleveltoenrolin" value="{{old('gradeleveltoenrolin')}} @isset($user){{$user->studenttype}} @endisset" readonly>
+    </div>
+       <div class="form-field">
+      <label for="gradeleveltoenrolin" class="form-label">General Average</label>
+      <input name="gradeleveltoenrolin" type="text" class="form-control @error('gradeleveltoenrolin') is-invalid |@enderror" id="gradeleveltoenrolin" aria-describedby="gradeleveltoenrolin" value="{{old('gradeleveltoenrolin')}} @isset($user){{$user->generalaverage}} @endisset" readonly>
     </div>
       <div class="form-field">
       <label for="gradeleveltoenrolin" class="form-label">Last Grade Level Completed</label>
@@ -43,6 +47,23 @@
       <input name="strandtoenrolin" type="text" class="form-control @error('strandtoenrolin') is-invalid |@enderror" id="strandtoenrolin" aria-describedby="strandtoenrolin" value="{{old('strandtoenrolin')}} @isset($user){{$user->strandtoenrolin}} @endisset" readonly>
     </div>
   </div>
+  @if($section_current != Null)
+  @php
+ $adviser =  DB::table('teachers')->where('advisory',$section_current->id)->first();
+@endphp
+
+    <div class="enrollment-form-field" style="grid-template-columns:   1fr 1fr ;">
+       
+      <div class="form-field">
+      <label for="gradeleveltoenrolin" class="form-label">Section to be Enrolled In</label>
+      <input name="gradeleveltoenrolin" type="text" class="form-control @error('gradeleveltoenrolin') is-invalid |@enderror" id="gradeleveltoenrolin" aria-describedby="gradeleveltoenrolin" value="{{$section_current->grade}} - {{$section_current->strand}} - {{$section_current->section_number}} " readonly>
+    </div>
+    <div class="form-field">
+      <label for="gradeleveltoenrolin" class="form-label">Adviser</label>
+      <input name="gradeleveltoenrolin" type="text" class="form-control @error('gradeleveltoenrolin') is-invalid |@enderror" id="gradeleveltoenrolin" aria-describedby="gradeleveltoenrolin" value="@isset($adviser){{$adviser->firstname}} {{$adviser->lastname}}  @endisset" readonly>
+    </div>
+  </div>
+  @endif
         <div class="form-field" id="semester" >
         <label for="semester" class="form-label">Accept as:</label>
         <div class="btn-group" role="group">
@@ -95,7 +116,7 @@ $subject_data = DB::table('subjects')->where('id',$subject_teacher_data->subject
 
   <hr>
   <div class="enrollment-form-field">
-    <button style="font-size: 14px;" type="submit" class="btn btn-success">Send Activation Request</button>
+   @if($section_current != Null) <button style="font-size: 14px;" type="submit" class="btn btn-success">Send Activation Request</button> @endif
     <a style="font-size: 14px;" class="btn btn-warning" href="{{route('admin.users.show',$user->id) }}" role="button">View Enrolment Form</a>
     <a style="font-size: 14px;" class="btn btn-warning" href="{{route('admin.users.index',$user->id) }}" role="button">Back</a>
   </div>

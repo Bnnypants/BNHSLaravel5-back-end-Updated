@@ -18,8 +18,8 @@ class StudentSectionView extends Controller
     $user = User::find($id);
 
 
-
     $section = DB::table('sections')->where('id',$user->section)->first();
+
 
 if (isset($section)) {
 
@@ -27,7 +27,11 @@ if (isset($section)) {
 
     $subjects = DB::table('subjects_teachers_schedule')->where('section_id',$section->id)->get();
 }
+else{
+       $request->session()->flash('error','Your schedule is incomplete, please contact registrar for clarifications');
 
+           return redirect(URL('index'));
+       }
     
 
     if($user->accepted_as == 'Conditionally Promoted')

@@ -35,7 +35,6 @@
             <th scope="col">SF9/Report Card</th>
             <th scope="col">Grade Level to Enrol Into</th>
             <th scope="col">Strand</th>
-            <th scope="col">Section to be Enrolled Into</th>
             <th scope="col">Last Reviewed By:</th>
 
             <th scope="col">Action</th>
@@ -60,39 +59,10 @@
             <td>{{$user ->strandtoenrolin}}</td>
 
 @php
-
-   $section =  DB::table('sections')->where('grade',$user->gradeleveltoenrolin)->where('strand',$user->strandtoenrolin)->where('lower_gwa','<',$user->generalaverage)->where('upper_gwa','>',$user->generalaverage)->first();
-@endphp
-
- <td>
-  
-
-@php
-
-if(($user->gradeleveltoenrolin == 'Grade 11') ||($user->gradeleveltoenrolin == 'Grade 12')){
-  $section =  DB::table('sections')->where('grade',$user->gradeleveltoenrolin)->where('strand',$user->strandtoenrolin)->where('lower_gwa','<=',$user->generalaverage)->where('upper_gwa','>=',$user->generalaverage)->where('admission_status','Yes')->first();
-}
-else{
-   $section =  DB::table('sections')->where('grade',$user->gradeleveltoenrolin)->where('lower_gwa','<=',$user->generalaverage)->where('upper_gwa','>=',$user->generalaverage)->where('admission_status','Yes')->first();
-}
-
   $reviewed_by = DB::table('users')->where('id',$user->last_reviewed_by)->first();
 @endphp
 
-@isset($section)
 
-@php
- $adviser =  DB::table('teachers')->where('advisory',$section->id)->first();
-@endphp
-
-@isset($adviser)
- Section Number : {{$section->section_number}}<br> Adviser :{{$adviser->firstname}} {{$adviser->middlename}} {{$adviser->lastname}} 
- @endisset
-
-@endisset
-
-
-  </td>
  <td>@isset( $reviewed_by){{$reviewed_by->name}} {{$reviewed_by->lastname}} @endisset</td>
         
             <td>
@@ -106,9 +76,9 @@ else{
               <div class="btn-toolbar mb-3" role="toolbar" aria-label="Toolbar with button groups">
                 <div class="btn-group me-2" role="group" aria-label="First group">
                   <a class="btn btn-md btn-warning" href="{{route('admin.users.show',$user->id) }}" role="button">View</a>
-                  @isset($section)
+                
                   <a class="btn btn-md btn-success" href="{{route('admin.users.edit',$user->id) }}" role="button">Accept</a>
-                  @endisset
+               
                   <a class="btn btn-md btn-danger" href="{{url('admin/reason',$user->id) }}" role="button">Reject</a>
                 </div>
               </div>

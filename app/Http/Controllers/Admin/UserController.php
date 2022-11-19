@@ -110,10 +110,12 @@ class UserController extends Controller
     public function show($id)
     {
         $user = User::find($id);
+
+
        return view('admin.users.show',
         [
            
-            'user' =>User::find($id),
+            'user' => $user,
             'modalities' =>DB::table('modality_user')->where('user_id',$id)->get(),
             'rejection_messages' =>DB::table('rejection_messages')->where('user_id',$id)->orderBy('id','DESC')->get(),
             'records' => DB::table('user_schoolyear')->where('lrnnumber',$user->lrnnumber)->get()
@@ -178,15 +180,25 @@ class UserController extends Controller
 
    
 
+
+
+
 if(($gradeleveltoenrolin == 'Grade 11') || ($gradeleveltoenrolin == 'Grade 12') ){
 
-     $section =  DB::table('sections')->where('grade',$gradeleveltoenrolin)->where('strand',$user->strandtoenrolin)->where('lower_gwa','<',$user->generalaverage)->where('upper_gwa','>',$user->generalaverage)->first();
+
+
+     $section_current =  DB::table('sections')->where('grade',$user->gradeleveltoenrolin)->where('strand',$user->strandtoenrolin)->where('lower_gwa','<=',$user->generalaverage)->where('upper_gwa','>=',$user->generalaverage)->where('admission_status','Yes')->first();
+   
+     $section =  DB::table('sections')->where('grade',$gradeleveltoenrolin)->where('strand',$user->strandtoenrolin)->where('lower_gwa','<=',$user->generalaverage)->where('upper_gwa','>=',$user->generalaverage)->first();
 
     }
 
   else{
 
- $section =  DB::table('sections')->where('grade',$gradeleveltoenrolin)->where('lower_gwa','<',$user->generalaverage)->where('upper_gwa','>',$user->generalaverage)->first();
+
+ $section_current =  DB::table('sections')->where('grade',$user->gradeleveltoenrolin)->where('lower_gwa','<=',$user->generalaverage)->where('upper_gwa','>=',$user->generalaverage)->where('admission_status','Yes')->first();
+
+ $section =  DB::table('sections')->where('grade',$gradeleveltoenrolin)->where('lower_gwa','<=',$user->generalaverage)->where('upper_gwa','>=',$user->generalaverage)->first();
 
   }  
 
@@ -199,6 +211,7 @@ if(isset($section)) {
             'roles'=>Role::all(),
             'user' => $user,
             'section' => $section,
+            'section_current' => $section_current,
             'subjects' => $subject,
             'adviser' => $adviser,
 
@@ -211,6 +224,7 @@ else{
             'roles'=>Role::all(),
             'user' => $user,
             'warning' => 'warning',
+             'section_current' => $section_current,
         ]);
 
 }
